@@ -1,0 +1,19 @@
+<h2 *ngIf="title">{{ title }}</h2>
+<div class="line"></div>
+<table class="table table-hover table-striped table-bordered">
+    <thead>
+    <tr>
+        <th *ngFor="let column of columns" style="text-transform: uppercase;">
+            <span [textContent]="column.title"></span>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let content of contents">
+        <td *ngFor="let column of columns">
+            <span *ngIf="!column.content" [textContent]="content[column.property]"></span>
+            <ng-content *ngIf="column.content"></ng-content>
+        </td>
+    </tr>
+    </tbody>
+</table>
