@@ -1,6 +1,6 @@
 {
   "name": "bng-angular-base",
-  "version": "0.0.16",
+  "version": "1.0.0",
   "dependencies": {
     "@angular/common": "^4.0.0",
     "@angular/compiler": "^4.0.0",
@@ -12,7 +12,9 @@
     "@angular/router": "^4.0.0",
     "core-js": "^2.4.1",
     "rxjs": "^5.1.0",
-    "zone.js": "^0.8.4"
+    "zone.js": "^0.8.4",
+    "nglinq": "^1.0.0",
+    "ngrepeat": "^1.0.0"
   },
   "devDependencies": {
     "@angular/cli": "1.0.6",

@@ -2,7 +2,7 @@ import {Http, RequestMethod, RequestOptions, Headers} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import {ResponseModel} from '../models/response.model';
 import {isNullOrUndefined} from 'util';
-import {UrlUtility} from "../utilities/url.utility";
+import {UrlUtility} from '../utilities/url.utility';
 
 export abstract class APIServiceBase {
 
@@ -79,6 +79,8 @@ export abstract class APIServiceBase {
         if (!isNullOrUndefined(query_parameters)) {
             request_options.params = UrlUtility.buildURLSearchParams(query_parameters);
         }
+
+        // console.log('request_options.params', request_options.params);
         return request_options;
     }
 }

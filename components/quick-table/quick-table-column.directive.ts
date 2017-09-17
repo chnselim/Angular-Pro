@@ -1,8 +1,8 @@
-import {ContentChild, ContentChildren, Directive, Input, QueryList} from '@angular/core';
-import {QuickTableCell} from "./quick-table-cell.component";
+import {ContentChild, Directive, Input, TemplateRef} from '@angular/core';
+import {ComponentBase} from '../base.component';
 
 @Directive({
-    selector: 'quick-table-column'
+    selector: 'quick-table-column',
 })
 export class QuickTableColumnDirective {
     @Input()
@@ -11,6 +11,9 @@ export class QuickTableColumnDirective {
     @Input()
     public property: string;
 
-    @ContentChild(QuickTableCell)
-    public content: QuickTableCell;
+    @ContentChild('filter')
+    public filter_template: TemplateRef<ComponentBase>;
+
+    @ContentChild('cell')
+    public cell_template: TemplateRef<ComponentBase>;
 }
