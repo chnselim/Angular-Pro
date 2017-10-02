@@ -14,6 +14,7 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
 
     private key_iterable_differ: IterableDiffer<string>;
     private value_iterable_differ: IterableDiffer<string>;
+    protected is_request_loading: boolean;
 
     public constructor(private iterable_differs: IterableDiffers) {
         super();
@@ -33,9 +34,11 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
     }
 
     protected getSourceFromAPI() {
+        this.is_request_loading = true;
         this.api_source
             .getResponseModel(this.current_page, this.per_page, this.query_parameters)
             .then(source_response => {
+                this.is_request_loading = false;
                 this.source = source_response.getBody();
                 this.total_count = parseInt(source_response.getHeaders().get('x-total-count'), 10);
             });
