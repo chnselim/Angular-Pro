@@ -1,0 +1,6 @@
+.pagination {
+    cursor: pointer;
+    float: right;
+    margin-top: -100px;
+    margin-bottom: -50px;
+}
