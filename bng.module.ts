@@ -10,6 +10,8 @@ import {QuickSelectItemDirective} from './components/quick-select/quick-select-i
 import {RepeatModule} from 'ngrepeat/repeat.module';
 import {PaginationComponent} from './components/pagination/pagination.component';
 import {SmartTableComponent} from './components/smart-table/smart-table.component';
+import {LoaderComponent} from './components/loader/loader.component';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
     declarations: [
@@ -19,13 +21,15 @@ import {SmartTableComponent} from './components/smart-table/smart-table.componen
         QuickSelectComponent,
         QuickSelectItemDirective,
         PaginationComponent,
-        SmartTableComponent
+        SmartTableComponent,
+        LoaderComponent
     ],
     imports: [
         BrowserModule,
         FormsModule,
         CommonModule,
-        RepeatModule
+        RepeatModule,
+        RouterModule
     ],
     exports: [
         QuickTableComponent,
