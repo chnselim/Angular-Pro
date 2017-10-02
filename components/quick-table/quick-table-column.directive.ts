@@ -11,6 +11,9 @@ export class QuickTableColumnDirective {
     @Input()
     public property: string;
 
+    @Input('colspan')
+    public column_span: number;
+
     @ContentChild('filter')
     public filter_template: TemplateRef<ComponentBase>;
 
