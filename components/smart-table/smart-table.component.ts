@@ -14,7 +14,6 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
 
     private key_iterable_differ: IterableDiffer<string>;
     private value_iterable_differ: IterableDiffer<string>;
-    protected is_request_loading: boolean;
 
     public constructor(private iterable_differs: IterableDiffers) {
         super();
@@ -28,12 +27,12 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
     @Input('query-parameters')
     public query_parameters = new Map<string, string>();
 
-    protected changePage(page: number) {
+    public changePage(page: number) {
         super.changePage(page);
         this.getSourceFromAPI();
     }
 
-    protected getSourceFromAPI() {
+    public getSourceFromAPI() {
         this.is_request_loading = true;
         this.api_source
             .getResponseModel(this.current_page, this.per_page, this.query_parameters)
