@@ -49,11 +49,9 @@ export abstract class APIServiceBase {
                 }
 
                 const response_data = response.json().data;
-                console.log('Response => ', response_data);
                 return new ResponseModel(response_data as T, response.headers);
             })
             .catch(error => {
-                console.log('Error => ', error);
                 return Promise.reject(error);
             });
     }
@@ -82,7 +80,6 @@ export abstract class APIServiceBase {
             request_options.params = UrlUtility.buildURLSearchParams(query_parameters);
         }
 
-        // console.log('request_options.params', request_options.params);
         return request_options;
     }
 }
