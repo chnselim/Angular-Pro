@@ -1,6 +1,51 @@
 {
-  "name": "bng-angular-base",
-  "version": "1.0.0",
+  "_args": [
+    [
+      {
+        "raw": "bng-angular-base@1.0.0",
+        "scope": null,
+        "escapedName": "bng-angular-base",
+        "name": "bng-angular-base",
+        "rawSpec": "1.0.0",
+        "spec": "1.0.0",
+        "type": "version"
+      },
+      "/Users/yazilim-5/byme/SkinCase-Panel-Frontend"
+    ]
+  ],
+  "_from": "bng-angular-base@1.0.0",
+  "_id": "bng-angular-base@1.0.0",
+  "_inCache": true,
+  "_location": "/bng-angular-base",
+  "_nodeVersion": "7.10.0",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/bng-angular-base-1.0.0.tgz_1505657780280_0.07125324942171574"
+  },
+  "_npmUser": {
+    "name": "fabsolute",
+    "email": "ahmetturk93@gmail.com"
+  },
+  "_npmVersion": "4.2.0",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "bng-angular-base@1.0.0",
+    "scope": null,
+    "escapedName": "bng-angular-base",
+    "name": "bng-angular-base",
+    "rawSpec": "1.0.0",
+    "spec": "1.0.0",
+    "type": "version"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/bng-angular-base/-/bng-angular-base-1.0.0.tgz",
+  "_shasum": "5a7ac1ff138536b04d48914077428bd67a64ff41",
+  "_shrinkwrap": null,
+  "_spec": "bng-angular-base@1.0.0",
+  "_where": "/Users/yazilim-5/byme/SkinCase-Panel-Frontend",
   "dependencies": {
     "@angular/common": "^4.0.0",
     "@angular/compiler": "^4.0.0",
@@ -11,10 +56,10 @@
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
     "core-js": "^2.4.1",
-    "rxjs": "^5.1.0",
-    "zone.js": "^0.8.4",
     "nglinq": "^1.0.0",
-    "ngrepeat": "^1.0.0"
+    "ngrepeat": "^1.0.0",
+    "rxjs": "^5.1.0",
+    "zone.js": "^0.8.4"
   },
   "devDependencies": {
     "@angular/cli": "1.0.6",
@@ -27,12 +72,29 @@
     "karma": "~1.4.1",
     "karma-chrome-launcher": "~2.1.1",
     "karma-cli": "~1.0.1",
+    "karma-coverage-istanbul-reporter": "^0.2.0",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
-    "karma-coverage-istanbul-reporter": "^0.2.0",
     "protractor": "~5.1.0",
     "ts-node": "~2.0.0",
     "tslint": "~4.5.0",
     "typescript": "~2.2.0"
-  }
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "5a7ac1ff138536b04d48914077428bd67a64ff41",
+    "tarball": "https://registry.npmjs.org/bng-angular-base/-/bng-angular-base-1.0.0.tgz"
+  },
+  "gitHead": "14865efd6f2f5360ad10b7d94e8c0b22d7e7ae39",
+  "maintainers": [
+    {
+      "name": "fabsolute",
+      "email": "ahmetturk93@gmail.com"
+    }
+  ],
+  "name": "bng-angular-base",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "scripts": {},
+  "version": "1.0.0"
 }
