@@ -12,4 +12,7 @@ export class BadgeComponent extends ComponentBase {
 
     @Input()
     public color: string;
+
+    @Input()
+    public href: string;
 }
