@@ -4,6 +4,7 @@ import {ComponentBase} from '../base.component';
 @Component({
     selector: 'badge',
     templateUrl: 'badge.component.html',
+    styleUrls: ['badge.component.css'],
     providers: [{provide: ComponentBase, useExisting: BadgeComponent}]
 })
 export class BadgeComponent extends ComponentBase {
