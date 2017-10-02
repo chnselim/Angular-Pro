@@ -33,10 +33,10 @@ export abstract class APIServiceBase {
         return this.doApiCall(RequestMethod.Delete, uri, query_parameters);
     }
 
-    private doApiCall<T>(method: RequestMethod,
-                         uri: string,
-                         query_parameters?: Map<string, string>,
-                         body?: any): Promise<ResponseModel<T>> {
+    protected doApiCall<T>(method: RequestMethod,
+                           uri: string,
+                           query_parameters?: Map<string, string>,
+                           body?: any): Promise<ResponseModel<T>> {
         const request_options = this.generateRequestOptions(method, uri, query_parameters, body);
         return this.http
             .request(request_options.url, request_options)
@@ -80,7 +80,6 @@ export abstract class APIServiceBase {
             request_options.params = UrlUtility.buildURLSearchParams(query_parameters);
         }
 
-        // console.log('request_options.params', request_options.params);
         return request_options;
     }
 }

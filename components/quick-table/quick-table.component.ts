@@ -30,17 +30,19 @@ export class QuickTableComponent extends ComponentBase {
     @ContentChildren(QuickTableColumnDirective)
     public columns: QueryList<QuickTableColumnDirective>;
 
-    protected get renderFilter(): boolean {
+    public is_request_loading: boolean;
+
+    public get renderFilter(): boolean {
         return this.columns.some((column) => {
             return column.filter_template != null;
         });
     }
 
-    protected get renderPagination(): boolean {
+    public get renderPagination(): boolean {
         return this.total_count > this.per_page;
     }
 
-    protected changePage(page: number) {
+    public changePage(page: number) {
         this.current_page = page;
         this.current_page_changed.emit(page);
     }

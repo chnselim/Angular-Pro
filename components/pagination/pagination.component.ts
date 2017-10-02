@@ -2,7 +2,8 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
     selector: 'pagination',
-    templateUrl: './pagination.component.html'
+    templateUrl: './pagination.component.html',
+    styleUrls: ['./pagination.component.css']
 })
 export class PaginationComponent {
 
@@ -40,7 +41,7 @@ export class PaginationComponent {
     private internal_item_count_per_page = 20;
     private internal_current_page = 1;
 
-    protected get total_page_count(): number {
+    public get total_page_count(): number {
         const total_page_count = Math.ceil(this.total_item_count / this.item_count_per_page);
         if (total_page_count > 0) {
             return total_page_count;
@@ -49,14 +50,14 @@ export class PaginationComponent {
         return 0;
     }
 
-    protected get shown_page_count(): number {
+    public get shown_page_count(): number {
         if (this.total_page_count > this.max_shown_page_count) {
             return this.max_shown_page_count;
         }
         return this.total_page_count;
     }
 
-    protected get start_page_index(): number {
+    public get start_page_index(): number {
 
         const center_number_index_of_pages = Math.ceil(this.max_shown_page_count / 2);
         let center_of_pages = center_number_index_of_pages;
@@ -76,7 +77,7 @@ export class PaginationComponent {
         return start_page_index;
     }
 
-    protected fireOnPageChanged(params: number) {
+    public fireOnPageChanged(params: number) {
         this.current_page_changed.emit(params);
     }
 }
