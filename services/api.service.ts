@@ -3,11 +3,10 @@ import 'rxjs/add/operator/toPromise';
 import {ResponseModel} from '../models/response.model';
 import {isNullOrUndefined} from 'util';
 import {UrlUtility} from '../utilities/url.utility';
-import {HttpStatusService} from "../../../src/app/services/http-status.service";
 
 export abstract class APIServiceBase {
 
-    constructor(protected http: Http, protected http_status_service: HttpStatusService) {
+    constructor(protected http: Http) {
     }
 
     public httpHead<T>(uri: string, query_parameters?: Map<string, string>): Promise<ResponseModel<T>> {
@@ -34,7 +33,7 @@ export abstract class APIServiceBase {
         return this.doApiCall(RequestMethod.Delete, uri, query_parameters);
     }
 
-    private doApiCall<T>(method: RequestMethod,
+    protected doApiCall<T>(method: RequestMethod,
                          uri: string,
                          query_parameters?: Map<string, string>,
                          body?: any): Promise<ResponseModel<T>> {
@@ -55,7 +54,6 @@ export abstract class APIServiceBase {
             })
             .catch(error => {
                 console.log('Error => ', error);
-                this.http_status_service.getHttpStatus(error.status);
                 return Promise.reject(error);
             });
     }
