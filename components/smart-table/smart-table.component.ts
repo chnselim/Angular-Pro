@@ -27,6 +27,9 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
     @Input('query-parameters')
     public query_parameters = new Map<string, string>();
 
+    @Input('show-index-number')
+    public show_index_number: boolean = false;
+
     public changePage(page: number) {
         super.changePage(page);
         this.getSourceFromAPI();
