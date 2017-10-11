@@ -1,7 +1,6 @@
 import {Component, ContentChildren, EventEmitter, Input, Output, QueryList} from '@angular/core';
 import {QuickTableColumnDirective} from './quick-table-column.directive';
 import {ComponentBase} from '../base.component';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {isNullOrUndefined} from "util";
 import {QuickSelectItemDirective} from "bng-angular-base/components/quick-select/quick-select-item.directive";
 
