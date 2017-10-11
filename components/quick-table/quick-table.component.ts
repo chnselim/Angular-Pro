@@ -1,11 +1,17 @@
 import {Component, ContentChildren, EventEmitter, Input, Output, QueryList} from '@angular/core';
 import {QuickTableColumnDirective} from './quick-table-column.directive';
 import {ComponentBase} from '../base.component';
+import {isNullOrUndefined} from "util";
+import {QuickSelectItemDirective} from "bng-angular-base/components/quick-select/quick-select-item.directive";
 
 @Component({
     selector: 'quick-table',
     templateUrl: 'quick-table.component.html',
-    providers: [{provide: ComponentBase, useExisting: QuickTableComponent}]
+    providers: [
+        {
+            provide: ComponentBase,
+            useExisting: QuickTableComponent
+        }]
 })
 export class QuickTableComponent extends ComponentBase {
 
@@ -45,5 +51,10 @@ export class QuickTableComponent extends ComponentBase {
     public changePage(page: number) {
         this.current_page = page;
         this.current_page_changed.emit(page);
+    }
+
+    public changePerPage(selected_item: QuickSelectItemDirective) {
+        const query_value = selected_item.value;
+        this.per_page = parseInt(query_value);
     }
 }

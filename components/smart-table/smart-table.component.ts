@@ -32,6 +32,11 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
         this.getSourceFromAPI();
     }
 
+    public changePerPage(per_page) {
+        super.changePerPage(per_page);
+        this.getSourceFromAPI();
+    }
+
     public getSourceFromAPI() {
         this.is_request_loading = true;
         this.api_source

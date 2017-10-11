@@ -1,20 +1,20 @@
 <div class="text-center">
     <ul class="pagination">
         <li class="page-item" [ngClass]="{disabled:current_page === 1}">
-            <a class="page-link" (click)="fireOnPageChanged(1)">First</a>
+            <a class="page-link" (click)="fireOnPageChanged(1)">İlk Sayfa</a>
         </li>
         <li class="page-item" [ngClass]="{disabled:current_page === 1}">
             <a class="page-link"
-               (click)="fireOnPageChanged(current_page - 1)">Previous</a>
+               (click)="fireOnPageChanged(current_page - 1)">Önceki</a>
         </li>
         <li class="page-item" *repeat="shown_page_count;startIndex:start_page_index;let page = index" [ngClass]="{active:current_page === page}">
             <a class="page-link" (click)="fireOnPageChanged(page)">{{page}}</a>
         </li>
         <li class="page-item" [ngClass]="{disabled:current_page === total_page_count}">
-            <a class="page-link" (click)="fireOnPageChanged(current_page + 1)">Next</a>
+            <a class="page-link" (click)="fireOnPageChanged(current_page + 1)">Sonraki</a>
         </li>
         <li class="page-item" [ngClass]="{disabled:current_page === total_page_count}">
-            <a class="page-link" (click)="fireOnPageChanged(total_page_count)">Last</a>
+            <a class="page-link" (click)="fireOnPageChanged(total_page_count)">Son Sayfa</a>
         </li>
     </ul>
 </div>

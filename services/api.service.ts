@@ -45,11 +45,11 @@ export abstract class APIServiceBase {
 
                 const response_text: string = response.text();
                 if (response_text.length === 0) {
-                    return null;
+                    return new ResponseModel(null, response.headers, response.status);
                 }
 
                 const response_data = response.json().data;
-                return new ResponseModel(response_data as T, response.headers);
+                return new ResponseModel(response_data as T, response.headers, response.status);
             })
             .catch(error => {
                 return Promise.reject(error);

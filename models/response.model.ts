@@ -1,14 +1,18 @@
 import {Headers} from '@angular/http';
 
 export class ResponseModel<T> {
-    constructor(private body: T, private headers: Headers) {
+    constructor(private body: T, private headers: Headers, private status_code: number) {
     }
 
-    getBody() {
+    getBody(): T {
         return this.body;
     }
 
-    getHeaders() {
+    getHeaders(): Headers {
         return this.headers;
+    }
+
+    getStatusCode(): number {
+        return this.status_code;
     }
 }
