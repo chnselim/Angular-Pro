@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ContentChildren, EventEmitter, Input, OnInit, Output, QueryList} from '@angular/core';
+import {AfterViewInit, Component, ContentChildren, EventEmitter, Input, Output, QueryList} from '@angular/core';
 import {QuickTableColumnDirective} from './quick-table-column.directive';
 import {ComponentBase} from '../base.component';
 import {isNullOrUndefined} from "util";
@@ -54,7 +54,6 @@ export class QuickTableComponent extends ComponentBase implements AfterViewInit 
         this.current_page = page;
         this.current_page_changed.emit(page);
         this.getIndexNumberList(page);
-
     }
 
     public changePerPage(selected_item: QuickSelectItemDirective) {
@@ -71,9 +70,6 @@ export class QuickTableComponent extends ComponentBase implements AfterViewInit 
     }
 
     ngAfterViewInit() {
-        this.index_list = [];
-        for (let i = 0; i < this.per_page; i++) {
-            this.index_list.push((this.current_page * this.per_page) - (this.per_page - 1) + i)
-        }
+        this.getIndexNumberList(this.current_page);
     }
 }
