@@ -6,8 +6,8 @@
                 <p *ngIf="title">
                     <b>{{title}}</b>
                     <b class="table-information" *ngIf="total_count">
-                        Sayfa: <span>{{current_page}}</span> |
-                        Toplam Veri: <span>{{ total_count }}</span>
+                        Sayfa: <span>{{current_page}}</span> &nbsp; | &nbsp;
+                        Toplam: <span>{{ total_count }}</span>
                     </b>
                 </p>
                 <hr>
@@ -31,7 +31,7 @@
                         </thead>
                         <tbody>
                         <tr *ngFor="let content of source">
-                            <td *ngFor="let column of columns" class="table-rows>
+                            <td *ngFor="let column of columns" class="table-rows">
                                     <span *ngIf="!column.cell_template && column.property"
                                           [textContent]="content[column.property]"></span>
                                 <ng-template *ngIf="column.cell_template" [ngTemplateOutlet]="column.cell_template"
@@ -40,6 +40,12 @@
                         </tr>
                         </tbody>
                     </table>
+                    <quick-select (item-selected)="changePerPage($event)" ngDefaultControl *ngIf="total_count > 10" [ngClass]="'per-page-select-options'">
+                        <quick-select-item value="10" name="10"></quick-select-item>
+                        <quick-select-item value="25" name="25" *ngIf="total_count > 10"></quick-select-item>
+                        <quick-select-item value="50" name="50" *ngIf="total_count > 25"></quick-select-item>
+                        <quick-select-item value="100" name="100" *ngIf="total_count > 50"></quick-select-item>
+                    </quick-select>
                 </div>
             </div>
         </div>
@@ -47,7 +53,7 @@
 </section>
 
 <section *ngIf="renderPagination">
-    <div class="container-fluid">
+    <div class="container-fluid" *ngIf="!is_request_loading">
         <div class="row">
             <div class="col-lg-12">
                 <pagination (onPageChanged)="changePage($event)"
