@@ -63,6 +63,6 @@ export class QuickSelectComponent extends ComponentBase implements ControlValueA
     private changed() {
         this.item_selected.emit(this.selected_item);
         this.onChange(this.selected_item);
-        console.log('selected_item', this.selected_item);
+        // console.log('selected_item', this.selected_item);
     }
 }

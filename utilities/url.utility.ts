@@ -2,10 +2,10 @@ import {URLSearchParams} from '@angular/http';
 
 export class UrlUtility {
     public static buildURLSearchParams(data: Map<string, string>): URLSearchParams {
-        const response: string[] = [];
+        var params = new URLSearchParams();
         data.forEach((value, key) => {
-            response.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
+            params.append(key, value);
         });
-        return new URLSearchParams(response.join('&'));
+        return params;
     }
 }
