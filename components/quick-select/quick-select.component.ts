@@ -1,4 +1,4 @@
-import {Component, ContentChildren, EventEmitter, Input, Output, QueryList} from '@angular/core';
+import {Component, ContentChildren, EventEmitter, Input, OnInit, Output, QueryList} from '@angular/core';
 import {ComponentBase} from '../base.component';
 import {QuickSelectItemDirective} from './quick-select-item.directive';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
@@ -17,9 +17,10 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
             multi: true
         }]
 })
-export class QuickSelectComponent extends ComponentBase implements ControlValueAccessor {
+export class QuickSelectComponent extends ComponentBase implements ControlValueAccessor, OnInit {
     @Input()
     public source: any[];
+
     @Input('name-selector')
     public name_selector: string = 'name';
 
@@ -31,6 +32,10 @@ export class QuickSelectComponent extends ComponentBase implements ControlValueA
 
     public is_disabled = false;
     public selected_item: any;
+
+    ngOnInit() {
+        this.selected_item = 'Hepsi';
+    }
 
     get value(): any {
         return this.selected_item;
