@@ -34,7 +34,7 @@ export class QuickSelectComponent extends ComponentBase implements ControlValueA
     public selected_item: any;
 
     ngOnInit() {
-        this.selected_item = 'Hepsi';
+        this.selected_item = "all";
     }
 
     get value(): any {
