@@ -20,8 +20,12 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 export class QuickSelectComponent extends ComponentBase implements ControlValueAccessor {
     @Input()
     public source: any[];
+
     @Input('name-selector')
     public name_selector: string = 'name';
+
+    @Input('value-selector')
+    public value_selector: string = 'value';
 
     @Output('item-selected')
     public item_selected: EventEmitter<any> = new EventEmitter<any>();
@@ -30,7 +34,7 @@ export class QuickSelectComponent extends ComponentBase implements ControlValueA
     public item_list: QueryList<QuickSelectItemDirective>;
 
     public is_disabled = false;
-    public selected_item: any;
+    public selected_item: any = new QuickSelectItemDirective();
 
     get value(): any {
         return this.selected_item;
@@ -63,6 +67,6 @@ export class QuickSelectComponent extends ComponentBase implements ControlValueA
     private changed() {
         this.item_selected.emit(this.selected_item);
         this.onChange(this.selected_item);
-        // console.log('selected_item', this.selected_item);
+        //console.log('selected_item', this.selected_item);
     }
 }
