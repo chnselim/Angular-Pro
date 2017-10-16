@@ -37,6 +37,7 @@ export class QuickTableComponent extends ComponentBase implements AfterViewInit 
     public columns: QueryList<QuickTableColumnDirective>;
 
     public is_request_loading: boolean;
+    public show_index_number: boolean;
 
     public index_list = [];
 
