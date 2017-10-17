@@ -9,7 +9,7 @@ import {ComponentBase} from '../base.component';
 })
 export class BadgeComponent extends ComponentBase {
     @Input('background-color')
-    public backgroundColor: string;
+    public background_color: string;
 
     @Input()
     public color: string;
