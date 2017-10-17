@@ -24,6 +24,9 @@ export class QuickSelectComponent extends ComponentBase implements ControlValueA
     @Input('name-selector')
     public name_selector: string = 'name';
 
+    @Input('has-option-all')
+    public has_option_all: boolean = true;
+
     @Output('item-selected')
     public item_selected: EventEmitter<any> = new EventEmitter<any>();
 
@@ -36,7 +39,6 @@ export class QuickSelectComponent extends ComponentBase implements ControlValueA
     ngOnInit() {
         this.selected_item = "all";
     }
-
     get value(): any {
         return this.selected_item;
     }
