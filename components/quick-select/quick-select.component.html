@@ -1,6 +1,7 @@
 <select (change)="changed()" (ngModelChange)="onChange($event)" [disabled]="is_disabled" [(ngModel)]="selected_item"
         *ngIf="!source" class="form-control">
-    <option value="all">Hepsi</option>
+    <option ngValue="all" *ngIf="has_option_all">Hepsi</option>
+    <option ngValue="all" *ngIf="!has_option_all">Seçiniz</option>
     <option *ngFor="let item of item_list" [ngValue]="item">{{item.name}}</option>
 </select>
 
