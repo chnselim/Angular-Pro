@@ -24,8 +24,8 @@ export class QuickSelectComponent extends ComponentBase implements ControlValueA
     @Input('name-selector')
     public name_selector: string = 'name';
 
-    @Input('has-option-all')
-    public has_option_all: boolean = true;
+    @Input('value')
+    public default_value: string;
 
     @Output('item-selected')
     public item_selected: EventEmitter<any> = new EventEmitter<any>();
