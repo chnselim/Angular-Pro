@@ -50,11 +50,11 @@
                         </table>
                     </div>
                     <quick-select (item-selected)="changePerPage($event)" ngDefaultControl *ngIf="total_count > 10"
-                                  ngClass="per-page-select-options" value="Seçiniz">
-                        <quick-select-item value="10" name="10"></quick-select-item>
-                        <quick-select-item value="25" name="25" *ngIf="total_count > 10"></quick-select-item>
-                        <quick-select-item value="50" name="50" *ngIf="total_count > 25"></quick-select-item>
-                        <quick-select-item value="100" name="100" *ngIf="total_count > 50"></quick-select-item>
+                                  ngClass="per-page-select-options" value="{{per_page}}">
+                        <quick-select-item value="10" name="10" *ngIf="per_page !== 10"></quick-select-item>
+                        <quick-select-item value="25" name="25" *ngIf="per_page !== 25 && total_count > 10"></quick-select-item>
+                        <quick-select-item value="50" name="50" *ngIf="per_page !== 50 && total_count > 25"></quick-select-item>
+                        <quick-select-item value="100" name="100" *ngIf="per_page !== 100 && total_count > 50"></quick-select-item>
                     </quick-select>
                 </div>
                 <div *ngIf="source">
