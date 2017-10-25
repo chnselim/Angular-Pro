@@ -8,4 +8,9 @@
     </a>
 </a>
 
-<ng-template #content><ng-content></ng-content></ng-template>
+<ng-template #content>
+    <ng-content></ng-content>
+    <p class="api-value" *ngIf="api_value">
+        ( {{api_value}} )
+    </p>
+</ng-template>
