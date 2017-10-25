@@ -10,7 +10,7 @@
 
 <ng-template #content>
     <ng-content></ng-content>
-    <p class="api-value" *ngIf="show_api_value">
-        ( {{show_api_value}} )
+    <p class="api-value" *ngIf="sub_content !== '' && sub_content !== undefined">
+        ( {{sub_content}} )
     </p>
 </ng-template>

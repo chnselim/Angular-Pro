@@ -17,6 +17,6 @@ export class BadgeComponent extends ComponentBase {
     @Input()
     public href: string;
 
-    @Input('api-value')
-    public show_api_value: boolean = false;
+    @Input('sub-content')
+    public sub_content: string;
 }
