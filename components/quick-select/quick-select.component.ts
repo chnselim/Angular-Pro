@@ -27,18 +27,21 @@ export class QuickSelectComponent extends ComponentBase implements ControlValueA
     @Input('value')
     public default_value: string;
 
+    @Input('disabled')
+    public is_disabled: boolean = false;
+
     @Output('item-selected')
     public item_selected: EventEmitter<any> = new EventEmitter<any>();
 
     @ContentChildren(QuickSelectItemDirective)
     public item_list: QueryList<QuickSelectItemDirective>;
 
-    public is_disabled = false;
     public selected_item: any;
 
     ngOnInit() {
         this.selected_item = "all";
     }
+
     get value(): any {
         return this.selected_item;
     }

@@ -16,4 +16,7 @@ export class BadgeComponent extends ComponentBase {
 
     @Input()
     public href: string;
+
+    @Input('sub-content')
+    public sub_content: string;
 }

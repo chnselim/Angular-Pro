@@ -27,6 +27,9 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
     @Input('query-parameters')
     public query_parameters = new Map<string, string>();
 
+    @Input()
+    public tag: string = 'all';
+
     public changePage(page: number) {
         super.changePage(page);
         this.getSourceFromAPI();
@@ -40,7 +43,7 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
     public getSourceFromAPI() {
         this.is_request_loading = true;
         this.api_source
-            .getResponseModel(this.current_page, this.per_page, this.query_parameters)
+            .getResponseModel(this.current_page, this.per_page, this.query_parameters, this.tag)
             .then(source_response => {
                 this.is_request_loading = false;
                 this.source = source_response.getBody();

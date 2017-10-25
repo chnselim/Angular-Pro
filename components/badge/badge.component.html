@@ -2,10 +2,15 @@
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </label>
 
-<a *ngIf="href !== '' && href !== undefined" [routerLink]="href" target="_blank">
+<a *ngIf="href !== '' && href !== undefined" [routerLink]="href">
     <a [ngStyle]="{'color': color,'background-color': background_color}">
         <ng-container *ngTemplateOutlet="content"></ng-container>
     </a>
 </a>
 
-<ng-template #content><ng-content></ng-content></ng-template>
+<ng-template #content>
+    <ng-content></ng-content>
+    <p class="api-value" *ngIf="sub_content !== '' && sub_content !== undefined">
+        ( {{sub_content}} )
+    </p>
+</ng-template>
