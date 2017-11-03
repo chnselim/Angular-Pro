@@ -1,0 +1,13 @@
+<div class="item d-flex justify-content-between member-detail-info">
+    <div class="info d-flex">
+        <div class="icon"><i class="icon-rss-feed"></i></div>
+        <div class="title"><h5>{{row_title}}</h5></div>
+    </div>
+    <div>
+        <p [ngStyle]="{color: row_value_color}">{{row_value}}
+            <br *ngIf="row_sub_content">
+            <span *ngIf="row_sub_content" class="row-api-value">{{row_sub_content}}</span>
+            <ng-content></ng-content>
+        </p>
+    </div>
+</div>

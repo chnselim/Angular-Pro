@@ -12,6 +12,11 @@ import {PaginationComponent} from './components/pagination/pagination.component'
 import {SmartTableComponent} from './components/smart-table/smart-table.component';
 import {LoaderComponent} from './components/loader/loader.component';
 import {RouterModule} from "@angular/router";
+import {CardComponent} from './components/card/card.component';
+import {CardContentComponent} from './components/card/card-content/card-content.component';
+import {CardContentRowComponent} from './components/card/card-content-row/card-content-row.component';
+import {CardHeaderComponent} from './components/card/card-header/card-header.component';
+import {CardFooterComponent} from './components/card/card-footer/card-footer.component';
 
 @NgModule({
     declarations: [
@@ -22,7 +27,12 @@ import {RouterModule} from "@angular/router";
         QuickSelectItemDirective,
         PaginationComponent,
         SmartTableComponent,
-        LoaderComponent
+        LoaderComponent,
+        CardComponent,
+        CardContentComponent,
+        CardContentRowComponent,
+        CardHeaderComponent,
+        CardFooterComponent
     ],
     imports: [
         BrowserModule,
@@ -38,7 +48,12 @@ import {RouterModule} from "@angular/router";
         QuickSelectComponent,
         QuickSelectItemDirective,
         PaginationComponent,
-        SmartTableComponent
+        SmartTableComponent,
+        CardComponent,
+        CardContentComponent,
+        CardContentRowComponent,
+        CardHeaderComponent,
+        CardFooterComponent
     ]
 })
 export class BNGModule {
