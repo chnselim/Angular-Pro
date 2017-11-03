@@ -7,14 +7,15 @@
                         <img *ngIf="!has_no_border_radius"
                              class="card-header-image margin-left-10"
                              src={{header_image}}
-                             [ngStyle]="{'width': header_image_width}" />
+                             [ngStyle]="{'width': header_image_width}"/>
                         <img *ngIf="has_no_border_radius"
                              class="card-header-image no-border"
                              src={{header_image}}
-                             [ngStyle]="{'width': header_image_width}" />
+                             [ngStyle]="{'width': header_image_width}"/>
                     </a>
                     <h3 class="card-header-title">
-                        <i *ngIf="!header_image" class="fa {{fa_icon}} fa-2x margin-bottom-20"></i>{{header_title}}
+                        <i *ngIf="!header_image" class="fa {{fa_icon}} fa-2x margin-bottom-20"></i><br *ngIf="!header_image">
+                        {{header_title}}
                     </h3>
                     <p class="text-capitalize card-text-blue" *ngIf="name !== 'true'">{{name}}</p>
                     <hr *ngIf="header_image">
