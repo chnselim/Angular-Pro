@@ -6,14 +6,14 @@ import {Component, Input} from '@angular/core';
 })
 export class CardContentRowComponent {
     @Input('title')
-    public row_title: string;
+    public title: string;
 
     @Input('value')
-    public row_value: string;
+    public value: string;
 
     @Input('sub-content')
-    public row_sub_content: string;
+    public sub_content: string;
 
     @Input('color')
-    public row_value_color: string;
+    public value_color: string;
 }
