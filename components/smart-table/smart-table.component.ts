@@ -5,7 +5,6 @@ import {
 import {QuickTableComponent} from '../quick-table/quick-table.component';
 import {GeneralAPIServiceBase} from '../../services/general-api.service';
 import 'nglinq/linq';
-import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
     selector: 'smart-table',
