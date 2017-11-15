@@ -11,12 +11,12 @@ import {RepeatModule} from 'ngrepeat/repeat.module';
 import {PaginationComponent} from './components/pagination/pagination.component';
 import {SmartTableComponent} from './components/smart-table/smart-table.component';
 import {LoaderComponent} from './components/loader/loader.component';
-import {RouterModule} from "@angular/router";
-import {CardComponent} from './components/card/card.component';
-import {CardContentComponent} from './components/card/card-content/card-content.component';
-import {CardContentRowComponent} from './components/card/card-content-row/card-content-row.component';
+import {RouterModule} from '@angular/router';
 import {CardHeaderComponent} from './components/card/card-header/card-header.component';
+import {CardContentComponent} from './components/card/card-content/card-content.component';
 import {CardFooterComponent} from './components/card/card-footer/card-footer.component';
+import {CardContentRowComponent} from './components/card/card-content-row/card-content-row.component';
+import {CardComponent} from './components/card/card.component';
 
 @NgModule({
     declarations: [
@@ -28,11 +28,11 @@ import {CardFooterComponent} from './components/card/card-footer/card-footer.com
         PaginationComponent,
         SmartTableComponent,
         LoaderComponent,
-        CardComponent,
-        CardContentComponent,
-        CardContentRowComponent,
         CardHeaderComponent,
-        CardFooterComponent
+        CardContentComponent,
+        CardFooterComponent,
+        CardContentRowComponent,
+        CardComponent
     ],
     imports: [
         BrowserModule,
@@ -49,11 +49,12 @@ import {CardFooterComponent} from './components/card/card-footer/card-footer.com
         QuickSelectItemDirective,
         PaginationComponent,
         SmartTableComponent,
-        CardComponent,
-        CardContentComponent,
-        CardContentRowComponent,
+        LoaderComponent,
         CardHeaderComponent,
-        CardFooterComponent
+        CardContentComponent,
+        CardFooterComponent,
+        CardContentRowComponent,
+        CardComponent
     ]
 })
 export class BNGModule {
