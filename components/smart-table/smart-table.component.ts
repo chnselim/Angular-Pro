@@ -4,6 +4,8 @@ import {
 } from '@angular/core';
 import {QuickTableComponent} from '../quick-table/quick-table.component';
 import {GeneralAPIServiceBase} from '../../services/general-api.service';
+import 'nglinq/linq';
+import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
     selector: 'smart-table',
@@ -30,6 +32,9 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
     @Input()
     public tag: string = 'all';
 
+    @Input('source-selector')
+    public source_selector = null;
+
     public changePage(page: number) {
         super.changePage(page);
         this.getSourceFromAPI();
@@ -46,7 +51,16 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
             .getResponseModel(this.current_page, this.per_page, this.query_parameters, this.tag)
             .then(source_response => {
                 this.is_request_loading = false;
-                this.source = source_response.getBody();
+                let source = source_response.getBody();
+                if (this.source_selector != null) {
+                    this.source = [];
+                    for (let content of source) {
+                        const selected_contents = this.source_selector(content);
+                        this.source = this.source.concat(selected_contents);
+                    }
+                } else {
+                    this.source = source;
+                }
                 this.total_count = parseInt(source_response.getHeaders().get('x-total-count'), 10);
             });
     }
