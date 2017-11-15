@@ -11,6 +11,9 @@ export class QuickTableColumnDirective {
     @Input()
     public property: string;
 
+    @Input('sort-by')
+    public sort_by: string;
+
     @ContentChild('filter')
     public filter_template: TemplateRef<ComponentBase>;
 
