@@ -28,7 +28,15 @@
                                     <span>#</span>
                                 </th>
                                 <th *ngFor="let column of columns" class="table-columns">
-                                    <span [textContent]="column.title"></span>
+                                    <span *ngIf="!column.sort_by"
+                                          [textContent]="column.title"></span>
+                                    <a class="underline"
+                                       *ngIf="column.sort_by"
+                                       (click)="changeSortType(column.sort_by);">
+                                        {{column.title}}
+                                        <i *ngIf="descending !== undefined"
+                                           [class]="(descending) ? 'fa fa-arrow-circle-up margin-left-5 text-success': 'fa fa-arrow-circle-down margin-left-5 text-danger'"></i>
+                                    </a>
                                 </th>
                             </tr>
                             <tr *ngIf="renderFilter">
