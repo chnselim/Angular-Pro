@@ -1,0 +1,7 @@
+.sub-content {
+    border-left: 4px solid #072fcf;
+}
+.sub-content:hover {
+    border-left: 7px solid #cf3e4d;
+    transition: all .2s;
+}
