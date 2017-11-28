@@ -30,12 +30,12 @@
                                 <th *ngFor="let column of columns" class="table-columns">
                                     <span *ngIf="!column.sort_by"
                                           [textContent]="column.title"></span>
-                                    <a class="underline"
+                                    <a style="text-decoration: underline;cursor: pointer;"
                                        *ngIf="column.sort_by"
-                                       (click)="changeSortType(column.sort_by);">
+                                       (click)="changeSortType(column);">
                                         {{column.title}}
-                                        <i *ngIf="descending !== undefined"
-                                           [class]="(descending) ? 'fa fa-arrow-circle-up margin-left-5 text-success': 'fa fa-arrow-circle-down margin-left-5 text-danger'"></i>
+                                        <i *ngIf="column.is_column_sort_icon_descending !== undefined && sort_by === column.sort_by"
+                                           [ngClass]="(column.is_column_sort_icon_descending) ? 'fa fa-arrow-circle-up margin-left-5 text-success': 'fa fa-arrow-circle-down margin-left-5 text-danger'"></i>
                                     </a>
                                 </th>
                             </tr>
