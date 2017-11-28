@@ -5,6 +5,7 @@ import {
 import {QuickTableComponent} from '../quick-table/quick-table.component';
 import {GeneralAPIServiceBase} from '../../services/general-api.service';
 import 'nglinq/linq';
+import {QuickTableColumnDirective} from '../quick-table/quick-table-column.directive';
 
 @Component({
     selector: 'smart-table',
@@ -34,12 +35,13 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
     @Input('source-selector')
     public source_selector = null;
 
-    public sort_by: string;
-    
-    public descending: boolean;
-
     public changePage(page: number) {
         super.changePage(page);
+        this.getSourceFromAPI();
+    }
+
+    public changeSortType(column: QuickTableColumnDirective) {
+        super.changeSortType(column);
         this.getSourceFromAPI();
     }
 
@@ -51,7 +53,7 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
     public getSourceFromAPI() {
         this.is_request_loading = true;
         this.api_source
-            .getResponseModel(this.current_page, this.per_page, this.query_parameters, this.tag, this.sort_by, this.descending)
+            .getResponseModel(this.current_page, this.per_page, this.query_parameters, this.tag, this.sort_by, this.is_column_sort_by_descending)
             .then(source_response => {
                 this.is_request_loading = false;
                 let source = source_response.getBody();
@@ -66,18 +68,6 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
                 }
                 this.total_count = parseInt(source_response.getHeaders().get('x-total-count'), 10);
             });
-    }
-
-    public changeSortType(sort_by) {
-        this.sort_by = sort_by;
-        if (this.descending === true) {
-            this.descending = false;
-        } else if (this.descending === false) {
-            this.descending = true;
-        } else {
-            this.descending = true;
-        }
-        this.getSourceFromAPI();
     }
 
     refresh(): void {
