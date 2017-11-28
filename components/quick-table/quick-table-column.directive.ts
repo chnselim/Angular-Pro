@@ -19,4 +19,6 @@ export class QuickTableColumnDirective {
 
     @ContentChild('cell')
     public cell_template: TemplateRef<ComponentBase>;
+
+    public is_column_sort_icon_descending: boolean;
 }
