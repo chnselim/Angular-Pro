@@ -1,7 +1,8 @@
-import {Component, ContentChildren, EventEmitter, Input, OnInit, Output, QueryList} from '@angular/core';
+import {AfterViewInit, Component, ContentChildren, EventEmitter, Input, OnInit, Output, QueryList} from '@angular/core';
 import {ComponentBase} from '../base.component';
 import {QuickSelectItemDirective} from './quick-select-item.directive';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {QuickTableComponent} from '../quick-table/quick-table.component';
+import {el} from "@angular/platform-browser/testing/src/browser_util";
 
 @Component({
     selector: 'quick-select',
@@ -10,14 +11,14 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
         {
             provide: ComponentBase,
             useExisting: QuickSelectComponent
-        },
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: QuickSelectComponent,
-            multi: true
         }]
 })
-export class QuickSelectComponent extends ComponentBase implements ControlValueAccessor, OnInit {
+export class QuickSelectComponent extends ComponentBase implements OnInit {
+
+    constructor(private quick_table: QuickTableComponent) {
+        super();
+    }
+
     @Input()
     public source: any[];
 
@@ -36,43 +37,16 @@ export class QuickSelectComponent extends ComponentBase implements ControlValueA
     @ContentChildren(QuickSelectItemDirective)
     public item_list: QueryList<QuickSelectItemDirective>;
 
-    public selected_item: any;
-
-    ngOnInit() {
-        this.selected_item = "all";
-    }
-
-    get value(): any {
-        return this.selected_item;
-    }
-
-    set value(value: any) {
-        if (value !== this.selected_item) {
-            this.selected_item = value;
-            this.changed();
-        }
-    }
-
-    public writeValue(obj: any): void {
-        this.selected_item = obj;
-        this.changed();
-    }
-
-    public registerOnChange(fn: (_: any) => void): void {
-        this.onChange = fn;
-    }
-
-    public registerOnTouched(fn: () => void): void {
-        this.onTouched = fn;
-    }
-
-    public setDisabledState(is_disabled: boolean): void {
-        this.is_disabled = is_disabled;
-    }
+    public selected_item: QuickSelectItemDirective;
 
     private changed() {
+        this.quick_table.current_page = 1;
+        this.quick_table.getIndexNumberList(this.quick_table.current_page);
         this.item_selected.emit(this.selected_item);
         this.onChange(this.selected_item);
-        // console.log('selected_item', this.selected_item);
+    }
+
+    ngOnInit() {
+        this.selected_item = null;
     }
 }
