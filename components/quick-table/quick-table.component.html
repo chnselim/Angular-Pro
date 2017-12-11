@@ -57,7 +57,7 @@
                                     <span *ngIf="!column.cell_template && column.property"
                                           [textContent]="content[column.property]"></span>
                                     <ng-template *ngIf="column.cell_template" [ngTemplateOutlet]="column.cell_template"
-                                                 [ngOutletContext]="{item:content,column:column}"></ng-template>
+                                                 [ngOutletContext]="{item:content,column:column,value:content[column.property]}"></ng-template>
                                 </td>
                             </tr>
                             </tbody>
