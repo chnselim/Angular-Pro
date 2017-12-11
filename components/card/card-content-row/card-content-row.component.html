@@ -1,7 +1,7 @@
 <div class="item d-flex justify-content-between member-detail-info" [ngClass]="(is_sub_menu) ? 'sub-content': ''" [class]="background_color">
     <div class="info d-flex">
         <div class="icon"><i class="icon-rss-feed"></i></div>
-        <div class="title"><h5>{{title}}</h5></div>
+        <div class="title"><h5 [ngStyle]="{color: value_color}">{{title}}</h5></div>
     </div>
     <div>
         <p [ngStyle]="{color: value_color}">{{value}}
