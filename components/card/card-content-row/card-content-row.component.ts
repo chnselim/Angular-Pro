@@ -21,6 +21,9 @@ export class CardContentRowComponent {
     @Input('color')
     public value_color: string;
 
+    @Input('header-color')
+    public header_color: string;
+
     @Input('bg-color')
     public background_color: string;
 }
