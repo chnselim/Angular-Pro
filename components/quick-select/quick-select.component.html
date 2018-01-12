@@ -1,3 +1,19 @@
+<!--<select (ngOnChange)="changed()" [disabled]="is_disabled" [(ngModel)]="selected_item"-->
+        <!--*ngIf="!source" class="form-control">-->
+    <!--<option [value]="selected_item" *ngIf="default_value">{{default_value}}</option>-->
+    <!--<ng-container *ngFor="let item of item_list">-->
+        <!--<option [ngValue]="item" *ngIf="item.selected" selected>{{item.name}}</option>-->
+        <!--<option [ngValue]="item" *ngIf="!item.selected">{{item.name}}</option>-->
+    <!--</ng-container>-->
+<!--</select>-->
+
+<!--<select (change)="changed()" [disabled]="is_disabled" [(ngModel)]="selected_item.value"-->
+        <!--*ngIf="source" class="form-control">-->
+    <!--<option ngValue="all" *ngIf="default_value">{{default_value}}</option>-->
+    <!--<option *ngFor="let item of source" [ngValue]="item">{{item[name_selector]}}</option>-->
+<!--</select>-->
+
+
 <select (change)="changed()" [disabled]="is_disabled" [(ngModel)]="selected_item"
         *ngIf="!source" class="form-control">
     <option [value]="selected_item" *ngIf="default_value">{{default_value}}</option>
