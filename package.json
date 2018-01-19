@@ -1,51 +1,6 @@
 {
-  "_args": [
-    [
-      {
-        "raw": "bng-angular-base@1.0.22",
-        "scope": null,
-        "escapedName": "bng-angular-base",
-        "name": "bng-angular-base",
-        "rawSpec": "1.0.22",
-        "spec": "1.0.22",
-        "type": "version"
-      },
-      "/Users/cs/bynogame/SkinCase-Panel-Frontend-V2"
-    ]
-  ],
-  "_from": "bng-angular-base@1.0.22",
-  "_id": "bng-angular-base@1.0.22",
-  "_inCache": true,
-  "_location": "/bng-angular-base",
-  "_nodeVersion": "9.0.0",
-  "_npmOperationalInternal": {
-    "host": "s3://npm-registry-packages",
-    "tmp": "tmp/bng-angular-base-1.0.22.tgz_1511854750542_0.23770190915092826"
-  },
-  "_npmUser": {
-    "name": "fabsolute",
-    "email": "ahmetturk93@gmail.com"
-  },
-  "_npmVersion": "5.5.1",
-  "_phantomChildren": {},
-  "_requested": {
-    "raw": "bng-angular-base@1.0.22",
-    "scope": null,
-    "escapedName": "bng-angular-base",
-    "name": "bng-angular-base",
-    "rawSpec": "1.0.22",
-    "spec": "1.0.22",
-    "type": "version"
-  },
-  "_requiredBy": [
-    "#USER",
-    "/"
-  ],
-  "_resolved": "https://registry.npmjs.org/bng-angular-base/-/bng-angular-base-1.0.22.tgz",
-  "_shasum": "cda4236f4f6ffeaad2d7d6f42d5e52174a4141b6",
-  "_shrinkwrap": null,
-  "_spec": "bng-angular-base@1.0.22",
-  "_where": "/Users/cs/bynogame/SkinCase-Panel-Frontend-V2",
+  "name": "bng-angular-base",
+  "version": "1.0.24",
   "dependencies": {
     "@angular/common": "^4.0.0",
     "@angular/compiler": "^4.0.0",
@@ -56,10 +11,10 @@
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
     "core-js": "^2.4.1",
-    "nglinq": "^1.0.0",
-    "ngrepeat": "^1.0.0",
     "rxjs": "^5.1.0",
-    "zone.js": "^0.8.4"
+    "zone.js": "^0.8.4",
+    "nglinq": "^1.0.0",
+    "ngrepeat": "^1.0.0"
   },
   "devDependencies": {
     "@angular/cli": "1.0.6",
@@ -72,29 +27,12 @@
     "karma": "~1.4.1",
     "karma-chrome-launcher": "~2.1.1",
     "karma-cli": "~1.0.1",
-    "karma-coverage-istanbul-reporter": "^0.2.0",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "karma-coverage-istanbul-reporter": "^0.2.0",
     "protractor": "~5.1.0",
     "ts-node": "~2.0.0",
     "tslint": "~4.5.0",
     "typescript": "~2.2.0"
-  },
-  "directories": {},
-  "dist": {
-    "integrity": "sha512-LMZkVSyS9cUYmHcGeiffMvXGQ9axyf0WvmtnkpBWz5gKBPJmdY4Q301UHu5H4qhS3uRxcRRLcOqEqxyQEEPiZw==",
-    "shasum": "cda4236f4f6ffeaad2d7d6f42d5e52174a4141b6",
-    "tarball": "https://registry.npmjs.org/bng-angular-base/-/bng-angular-base-1.0.22.tgz"
-  },
-  "gitHead": "8c13b531dab101b097b731602d3a9624226f531a",
-  "maintainers": [
-    {
-      "name": "fabsolute",
-      "email": "ahmetturk93@gmail.com"
-    }
-  ],
-  "name": "bng-angular-base",
-  "optionalDependencies": {},
-  "readme": "ERROR: No README data found!",
-  "version": "1.0.22"
+  }
 }
