@@ -2,7 +2,7 @@
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </label>
 
-<a *ngIf="href !== '' && href !== undefined" [routerLink]="href">
+<a *ngIf="href !== undefined && href !== ''" [routerLink]="href">
     <a [ngStyle]="{'color': color,'background-color': background_color}">
         <ng-container *ngTemplateOutlet="content"></ng-container>
     </a>
