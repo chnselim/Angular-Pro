@@ -51,20 +51,22 @@
                             <tbody>
                             <tr *ngFor="let content of source;let index = index;">
                                 <td *ngIf="show_index_number" class="table-rows">
-                                    <b>{{index_list[index]}}</b>
+                                    <a [routerLink]="content.id" class="text-black underline">
+                                        <strong>{{index_list[index]}}</strong>
+                                    </a>
                                 </td>
                                 <td *ngFor="let column of columns" class="table-rows">
                                     <span *ngIf="!column.cell_template && column.property"
                                           [textContent]="content[column.property]"></span>
                                     <ng-template *ngIf="column.cell_template" [ngTemplateOutlet]="column.cell_template"
-                                                 [ngOutletContext]="{item:content,column:column,value:content[column.property]}"></ng-template>
+                                                 [ngOutletContext]="{item:content,column:column, value:content[column.property]}"></ng-template>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                     <quick-select (item-selected)="changePerPage($event)" ngDefaultControl *ngIf="total_count > 10"
-                                  ngClass="per-page-select-options">
+                                  ngClass="per-page-select-options" [selected-item]="selected_per_page_number">
                         <quick-select-item value="10" name="10"></quick-select-item>
                         <quick-select-item value="25" name="25"></quick-select-item>
                         <quick-select-item value="50" name="50" *ngIf="total_count > 25"></quick-select-item>

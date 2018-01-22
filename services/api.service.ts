@@ -47,7 +47,7 @@ export abstract class APIServiceBase {
                 if (response_text.length === 0) {
                     return new ResponseModel(null, response.headers, response.status);
                 }
-
+                
                 const response_data = response.json().data;
                 return new ResponseModel(response_data as T, response.headers, response.status);
             })

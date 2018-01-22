@@ -1,7 +1,11 @@
 <select (change)="changed()" [disabled]="is_disabled" [(ngModel)]="selected_item"
         *ngIf="!source" class="form-control">
     <option [value]="selected_item" *ngIf="default_value">{{default_value}}</option>
-    <option [ngValue]="item" *ngFor="let item of item_list">{{item.name}}</option>
+    <ng-container *ngFor="let item of item_list">
+        <option *ngIf="selected_item && (item.value === selected_item.value)" [ngValue]="selected_item" selected>{{item.name}}</option>
+        <option *ngIf="selected_item && (item.value !== selected_item.value)" [ngValue]="item">{{item.name}}</option>
+        <option *ngIf="!selected_item" [ngValue]="item">{{item.name}}</option>
+    </ng-container>
 </select>
 
 <select (change)="changed()" [disabled]="is_disabled" [(ngModel)]="selected_item"

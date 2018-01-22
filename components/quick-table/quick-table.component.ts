@@ -50,6 +50,8 @@ export class QuickTableComponent extends ComponentBase implements AfterViewInit 
 
     public is_column_sort_by_descending: boolean;
 
+    public selected_per_page_number: QuickSelectItemDirective;
+
     public get renderFilter(): boolean {
         return this.columns.some((column) => {
 
@@ -68,6 +70,7 @@ export class QuickTableComponent extends ComponentBase implements AfterViewInit 
     }
 
     public changePerPage(selected_item: QuickSelectItemDirective) {
+        this.selected_per_page_number = selected_item;
         const query_value = selected_item.value;
         this.per_page = parseInt(query_value);
         this.current_page = 1;
@@ -94,5 +97,6 @@ export class QuickTableComponent extends ComponentBase implements AfterViewInit 
 
     ngAfterViewInit() {
         this.getIndexNumberList(this.current_page);
+        this.selected_per_page_number = {value: this.per_page.toString(), name: this.per_page.toString()};
     }
 }

@@ -1,5 +1,5 @@
 import {
-    Component, DoCheck, Input, IterableDiffer, IterableDiffers, OnChanges, OnInit,
+    Component, DoCheck, Input, IterableDiffer, IterableDiffers, KeyValueDiffers, OnInit,
     SimpleChanges
 } from '@angular/core';
 import {QuickTableComponent} from '../quick-table/quick-table.component';
@@ -12,15 +12,13 @@ import {QuickTableColumnDirective} from '../quick-table/quick-table-column.direc
     templateUrl: '../quick-table/quick-table.component.html',
     providers: [{provide: QuickTableComponent, useExisting: SmartTableComponent}]
 })
-export class SmartTableComponent extends QuickTableComponent implements OnInit, OnChanges, DoCheck {
+export class SmartTableComponent extends QuickTableComponent implements OnInit, DoCheck {
 
-    private key_iterable_differ: IterableDiffer<string>;
-    private value_iterable_differ: IterableDiffer<string>;
+    public key_value_differ: any;
 
-    public constructor(private iterable_differs: IterableDiffers) {
+    public constructor(private differs: KeyValueDiffers) {
         super();
-        this.key_iterable_differ = this.iterable_differs.find([]).create(null);
-        this.value_iterable_differ = this.iterable_differs.find([]).create(null);
+        this.key_value_differ = this.differs.find(this.query_parameters).create(null);
     }
 
     @Input('api-source')
@@ -37,17 +35,17 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
 
     public changePage(page: number) {
         super.changePage(page);
-        this.getSourceFromAPI();
+        this.refresh();
     }
 
     public changeSortType(column: QuickTableColumnDirective) {
         super.changeSortType(column);
-        this.getSourceFromAPI();
+        this.refresh();
     }
 
     public changePerPage(per_page) {
         super.changePerPage(per_page);
-        this.getSourceFromAPI();
+        this.refresh();
     }
 
     public getSourceFromAPI() {
@@ -74,24 +72,13 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
         this.getSourceFromAPI();
     }
 
-    ngOnInit(): void {
+    ngOnInit() {
         this.refresh();
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if ('api_source' in changes || 'query_parameters' in changes) {
-            this.refresh();
-        }
-    }
-
     ngDoCheck(): void {
-        const key_changes = this.key_iterable_differ.diff(this.query_parameters.keys());
-        const value_changes = this.value_iterable_differ.diff(this.query_parameters.values());
-
-        if (key_changes || value_changes) {
-            // console.log('key_changes', key_changes);
-            // console.log('value_changes', value_changes);
-            // this.current_page = 1;todo
+        const key_value_changed = this.key_value_differ.diff(this.query_parameters);
+        if (key_value_changed) {
             this.refresh();
         }
     }
