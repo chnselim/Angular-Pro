@@ -74,6 +74,7 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
 
     ngOnInit() {
         this.refresh();
+        this.key_value_differ.diff(this.query_parameters);
     }
 
     ngDoCheck(): void {
