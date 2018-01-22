@@ -36,20 +36,18 @@ export abstract class APIServiceBase {
     protected doApiCall<T>(method: RequestMethod,
                            uri: string,
                            query_parameters?: Map<string, string>,
-                           body?: any,
-                           url?: string): Promise<ResponseModel<T>> {
+                           body?: any): Promise<ResponseModel<T>> {
         const request_options = this.generateRequestOptions(method, uri, query_parameters, body);
         return this.http
             .request(request_options.url, request_options)
             .toPromise()
             .then(response => {
-                // console.log('---->', response.json().data);
                 const response_text: string = response.text();
                 if (response_text.length === 0) {
-                    return new ResponseModel(null, response.headers, response.status, response.url);
+                    return new ResponseModel(null, response.headers, response.status);
                 }
                 const response_data = response.json().data;
-                return new ResponseModel(response_data as T, response.headers, response.status, response.url);
+                return new ResponseModel(response_data as T, response.headers, response.status);
             })
             .catch(error => {
                 return Promise.reject(error);
