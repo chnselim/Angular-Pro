@@ -9,7 +9,4 @@ export class QuickSelectItemDirective {
 
     @Input()
     public name: string;
-
-    @Input()
-    public selected?: boolean = false;
 }
