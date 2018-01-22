@@ -55,7 +55,6 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
         this.api_source
             .getResponseModel(this.current_page, this.per_page, this.query_parameters, this.tag, this.sort_by, this.is_column_sort_by_descending)
             .then(source_response => {
-                console.log(source_response);
                 this.is_request_loading = false;
                 let source = source_response.getBody();
                 if (this.source_selector != null) {
