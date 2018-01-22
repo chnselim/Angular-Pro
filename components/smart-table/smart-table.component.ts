@@ -16,8 +16,6 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
 
     public key_value_differ: any;
 
-    public key_value_changed: any;
-
     public constructor(private differs: KeyValueDiffers) {
         super();
         this.key_value_differ = this.differs.find(this.query_parameters).create(null);
@@ -76,12 +74,12 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
 
     ngOnInit() {
         this.refresh();
-        this.key_value_changed = this.key_value_differ.diff(this.query_parameters);
+        this.key_value_differ.diff(this.query_parameters);
     }
 
     ngDoCheck(): void {
-        this.key_value_changed = this.key_value_differ.diff(this.query_parameters);
-        if (this.key_value_changed) {
+        const key_value_changed = this.key_value_differ.diff(this.query_parameters);
+        if (key_value_changed) {
             this.refresh();
         }
     }
