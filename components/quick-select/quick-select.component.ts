@@ -13,7 +13,7 @@ import {el} from "@angular/platform-browser/testing/src/browser_util";
             useExisting: QuickSelectComponent
         }]
 })
-export class QuickSelectComponent extends ComponentBase implements OnInit, AfterViewInit {
+export class QuickSelectComponent extends ComponentBase {
 
     constructor(private quick_table: QuickTableComponent) {
         super();
@@ -37,6 +37,7 @@ export class QuickSelectComponent extends ComponentBase implements OnInit, After
     @ContentChildren(QuickSelectItemDirective)
     public item_list: QueryList<QuickSelectItemDirective>;
 
+    @Input('selected-item')
     public selected_item: QuickSelectItemDirective;
 
     private changed() {
@@ -44,19 +45,5 @@ export class QuickSelectComponent extends ComponentBase implements OnInit, After
         this.quick_table.getIndexNumberList(this.quick_table.current_page);
         this.item_selected.emit(this.selected_item);
         this.onChange(this.selected_item);
-    }
-
-    ngOnInit() {
-        this.selected_item = null;
-    }
-
-    ngAfterViewInit() {
-        this.item_list.forEach(item => {
-            if (item.selected) {
-                setTimeout(() => {
-                    this.selected_item = item;
-                }, 0);
-            }
-        });
     }
 }
