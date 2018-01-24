@@ -11,6 +11,9 @@ export class QuickTableColumnDirective {
     @Input()
     public property: string;
 
+    @Input('column-width')
+    public column_width: string;
+
     @Input('sort-by')
     public sort_by: string;
 
