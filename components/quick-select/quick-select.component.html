@@ -10,6 +10,6 @@
 
 <select (change)="changed()" [disabled]="is_disabled" [(ngModel)]="selected_item"
         *ngIf="source" class="form-control">
-    <option ngValue="all" *ngIf="default_value">{{default_value}}</option>
+    <option [value]="selected_item" *ngIf="default_value">{{default_value}}</option>
     <option *ngFor="let item of source" [ngValue]="item">{{item[name_selector]}}</option>
 </select>
