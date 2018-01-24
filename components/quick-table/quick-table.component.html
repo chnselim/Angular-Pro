@@ -28,7 +28,7 @@
                                     <span>#</span>
                                 </th>
                                 <th *ngFor="let column of columns" class="table-columns"
-                                    [ngClass]="(column.column_width) ? column.column_width: ''">
+                                    [ngClass]="(column.table_column_class) ? column.table_column_class: ''">
                                     <span *ngIf="!column.sort_by"
                                           [textContent]="column.title"></span>
                                     <a class="underline"
