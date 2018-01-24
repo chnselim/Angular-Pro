@@ -11,6 +11,9 @@ export class QuickTableColumnDirective {
     @Input()
     public property: string;
 
+    @Input('column-class')
+    public table_column_class: string;
+
     @Input('sort-by')
     public sort_by: string;
 
