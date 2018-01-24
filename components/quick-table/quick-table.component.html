@@ -27,10 +27,11 @@
                                 <th *ngIf="show_index_number" class="table-columns">
                                     <span>#</span>
                                 </th>
-                                <th *ngFor="let column of columns" class="table-columns">
+                                <th *ngFor="let column of columns" class="table-columns"
+                                    [ngClass]="(column.column_width) ? column.column_width: ''">
                                     <span *ngIf="!column.sort_by"
                                           [textContent]="column.title"></span>
-                                    <a style="text-decoration: underline;cursor: pointer;"
+                                    <a class="underline"
                                        *ngIf="column.sort_by"
                                        (click)="changeSortType(column);">
                                         {{column.title}}
