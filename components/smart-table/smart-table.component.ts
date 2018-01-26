@@ -1,22 +1,23 @@
 import {
-    Component, DoCheck, Input, IterableDiffer, IterableDiffers, KeyValueDiffers, OnInit,
-    SimpleChanges
+    AfterContentInit, Component, DoCheck, Input, KeyValueDiffers, OnInit, SimpleChanges
 } from '@angular/core';
 import {QuickTableComponent} from '../quick-table/quick-table.component';
 import {GeneralAPIServiceBase} from '../../services/general-api.service';
 import 'nglinq/linq';
 import {QuickTableColumnDirective} from '../quick-table/quick-table-column.directive';
+import {StorageService} from '../../../../src/app/services/storage.service';
+import {CheckboxFilterModel} from '../../../../src/app/models/common/checkbox-filter/checkbox-filter.model';
 
 @Component({
     selector: 'smart-table',
     templateUrl: '../quick-table/quick-table.component.html',
     providers: [{provide: QuickTableComponent, useExisting: SmartTableComponent}]
 })
-export class SmartTableComponent extends QuickTableComponent implements OnInit, DoCheck {
+export class SmartTableComponent extends QuickTableComponent implements OnInit, DoCheck, AfterContentInit {
 
     public key_value_differ: any;
 
-    public constructor(private differs: KeyValueDiffers) {
+    public constructor(private differs: KeyValueDiffers, private storage_service: StorageService) {
         super();
         this.key_value_differ = this.differs.find(this.query_parameters).create(null);
     }
@@ -32,6 +33,11 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
 
     @Input('source-selector')
     public source_selector = null;
+
+    @Input('table-tag')
+    public table_tag: string;
+
+    public checkbox_filter_list: CheckboxFilterModel[] = [];
 
     public changePage(page: number) {
         super.changePage(page);
@@ -75,6 +81,24 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
     ngOnInit() {
         this.refresh();
         this.key_value_differ.diff(this.query_parameters);
+        if (this.storage_service.getCheckboxFilter()) {
+            this.checkbox_filter_list = this.storage_service.getCheckboxFilter();
+        }
+    }
+
+    ngAfterContentInit() {
+        this.columns.forEach(column => {
+            setTimeout(() => Object.assign(column, {'selected': true}));
+            this.checkbox_filter_list.forEach(filter => {
+                if (filter.table === this.table_tag) {
+                    if (!filter.columns.contains(column.property)) {
+                        setTimeout(() => Object.assign(column, {'selected': true}));
+                    } else {
+                        setTimeout(() => Object.assign(column, {'selected': false}));
+                    }
+                }
+            });
+        });
     }
 
     ngDoCheck(): void {
@@ -82,5 +106,32 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
         if (key_value_changed) {
             this.refresh();
         }
+    }
+
+    public setCheckboxFilter(column) {
+        column['selected'] = !column['selected'];
+        if (column['selected']) { // seçtiysek storageden sil
+            this.checkbox_filter_list.forEach(filter => {
+                if (filter.table === this.table_tag) {
+                    filter.columns.splice(filter.columns.indexOf(column.property), 1);
+                }
+            });
+        } else { // seçimi kaldırdıysak storage ekle
+            const checkbox_filter: CheckboxFilterModel = new CheckboxFilterModel();
+            if (this.checkbox_filter_list.every(filter => {
+                    return this.table_tag !== filter.table
+                })) { // önceden table ekli dğeilse
+                checkbox_filter.table = this.table_tag;
+                checkbox_filter.columns.push(column.property);
+                this.checkbox_filter_list.push(checkbox_filter);
+            } else { // table ekli ancak column ekli değilse
+                this.checkbox_filter_list.forEach(filter => {
+                    if (filter.table === this.table_tag) {
+                        filter.columns.push(column.property);
+                    }
+                });
+            }
+        }
+        this.storage_service.setCheckboxFilter(this.checkbox_filter_list);
     }
 }

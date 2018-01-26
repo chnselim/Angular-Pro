@@ -2,6 +2,26 @@
 <section class="tables" [hidden]="is_request_loading">
     <div class="container-fluid">
         <div class="row">
+            <div class="col-lg-12 margin-bottom-10" *ngIf="table_tag">
+                <a class="btn btn-small btn-blue cursor-pointer text-white" id="filters"
+                   data-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-filter"></i>
+                    Filtre
+                </a>
+                <ul aria-labelledby="filters" class="dropdown-menu width-200 bg-light-blue margin-left-15">
+                    <ng-container *ngFor="let column of columns">
+                        <li class="cursor-pointer" (click)="setCheckboxFilter(column);">
+                            <a class="dropdown-item">
+                                <input [attr.id]="'checkboxCustom' + column.property"
+                                       type="checkbox" [checked]="column['selected']"
+                                       class="checkbox-template">
+                                <label [attr.for]="'checkboxCustom' + column.property"
+                                       class="nice-label language-button">{{column.title}}</label>
+                            </a>
+                        </li>
+                    </ng-container>
+                </ul>
+            </div>
             <div class="col-lg-12">
                 <p *ngIf="title">
                     <b>{{title}}</b>
@@ -27,26 +47,30 @@
                                 <th *ngIf="show_index_number" class="table-columns">
                                     <span>#</span>
                                 </th>
-                                <th *ngFor="let column of columns" class="table-columns"
-                                    [ngClass]="(column.table_column_class) ? column.table_column_class: ''">
+                                <ng-container *ngFor="let column of columns">
+                                    <th class="table-columns" *ngIf="column['selected']"
+                                        [ngClass]="(column.table_column_class) ? column.table_column_class: ''">
                                     <span *ngIf="!column.sort_by"
                                           [textContent]="column.title"></span>
-                                    <a class="underline"
-                                       *ngIf="column.sort_by"
-                                       (click)="changeSortType(column);">
-                                        {{column.title}}
-                                        <i *ngIf="column.is_column_sort_icon_descending !== undefined && sort_by === column.sort_by"
-                                           [ngClass]="(column.is_column_sort_icon_descending) ? 'fa fa-arrow-circle-up margin-left-5 text-success': 'fa fa-arrow-circle-down margin-left-5 text-danger'"></i>
-                                    </a>
-                                </th>
+                                        <a class="underline"
+                                           *ngIf="column.sort_by"
+                                           (click)="changeSortType(column);">
+                                            {{column.title}}
+                                            <i *ngIf="column.is_column_sort_icon_descending !== undefined && sort_by === column.sort_by"
+                                               [ngClass]="(column.is_column_sort_icon_descending) ? 'fa fa-arrow-circle-up margin-left-5 text-success': 'fa fa-arrow-circle-down margin-left-5 text-danger'"></i>
+                                        </a>
+                                    </th>
+                                </ng-container>
                             </tr>
                             <tr *ngIf="renderFilter">
                                 <th *ngIf="show_index_number"></th>
-                                <th *ngFor="let column of columns">
-                                    <ng-template *ngIf="column.filter_template"
-                                                 [ngTemplateOutlet]="column.filter_template"
-                                                 [ngOutletContext]="{title:column.title}"></ng-template>
-                                </th>
+                                <ng-container *ngFor="let column of columns">
+                                    <th *ngIf="column['selected']">
+                                        <ng-template *ngIf="column.filter_template"
+                                                     [ngTemplateOutlet]="column.filter_template"
+                                                     [ngOutletContext]="{title:column.title}"></ng-template>
+                                    </th>
+                                </ng-container>
                             </tr>
                             </thead>
                             <tbody>
@@ -56,12 +80,15 @@
                                         <strong>{{index_list[index]}}</strong>
                                     </a>
                                 </td>
-                                <td *ngFor="let column of columns" class="table-rows">
+                                <ng-container *ngFor="let column of columns">
+                                    <td *ngIf="column['selected']" class="table-rows">
                                     <span *ngIf="!column.cell_template && column.property"
                                           [textContent]="content[column.property]"></span>
-                                    <ng-template *ngIf="column.cell_template" [ngTemplateOutlet]="column.cell_template"
-                                                 [ngOutletContext]="{item:content, column:column, value:content[column.property], index:index_list[index]}"></ng-template>
-                                </td>
+                                        <ng-template *ngIf="column.cell_template"
+                                                     [ngTemplateOutlet]="column.cell_template"
+                                                     [ngOutletContext]="{item:content, column:column, value:content[column.property], index:index_list[index]}"></ng-template>
+                                    </td>
+                                </ng-container>
                             </tr>
                             </tbody>
                         </table>
