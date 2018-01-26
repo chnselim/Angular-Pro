@@ -88,13 +88,13 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
 
     ngAfterContentInit() {
         this.columns.forEach(column => {
-            setTimeout(() => Object.assign(column, {'selected': true}));
+            Object.assign(column, {'selected': true});
             this.checkbox_filter_list.forEach(filter => {
                 if (filter.table === this.table_tag) {
-                    if (!filter.columns.contains(column.property)) {
-                        setTimeout(() => Object.assign(column, {'selected': true}));
+                    if (filter.columns.contains(column.property)) {
+                        Object.assign(column, {'selected': false});
                     } else {
-                        setTimeout(() => Object.assign(column, {'selected': false}));
+                        Object.assign(column, {'selected': true});
                     }
                 }
             });
@@ -110,21 +110,21 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
 
     public setCheckboxFilter(column) {
         column['selected'] = !column['selected'];
-        if (column['selected']) { // seçtiysek storageden sil
+        if (column['selected']) {
             this.checkbox_filter_list.forEach(filter => {
                 if (filter.table === this.table_tag) {
                     filter.columns.splice(filter.columns.indexOf(column.property), 1);
                 }
             });
-        } else { // seçimi kaldırdıysak storage ekle
+        } else {
             const checkbox_filter: CheckboxFilterModel = new CheckboxFilterModel();
             if (this.checkbox_filter_list.every(filter => {
                     return this.table_tag !== filter.table
-                })) { // önceden table ekli dğeilse
+                })) {
                 checkbox_filter.table = this.table_tag;
                 checkbox_filter.columns.push(column.property);
                 this.checkbox_filter_list.push(checkbox_filter);
-            } else { // table ekli ancak column ekli değilse
+            } else {
                 this.checkbox_filter_list.forEach(filter => {
                     if (filter.table === this.table_tag) {
                         filter.columns.push(column.property);
