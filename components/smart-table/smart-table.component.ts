@@ -1,12 +1,13 @@
 import {
     AfterContentInit, Component, DoCheck, Input, KeyValueDiffers, OnInit, SimpleChanges
 } from '@angular/core';
-import {QuickTableComponent} from '../quick-table/quick-table.component';
-import {GeneralAPIServiceBase} from '../../services/general-api.service';
-import 'nglinq/linq';
-import {QuickTableColumnDirective} from '../quick-table/quick-table-column.directive';
-import {StorageService} from '../../../../src/app/services/storage.service';
 import {CheckboxFilterModel} from '../../../../src/app/models/common/checkbox-filter/checkbox-filter.model';
+import {GeneralAPIServiceBase} from '../../services/general-api.service';
+import {QuickTableColumnDirective} from '../quick-table/quick-table-column.directive';
+import {QuickTableComponent} from '../quick-table/quick-table.component';
+import {StorageService} from '../../../../src/app/services/storage.service';
+import 'nglinq/linq';
+import {isNullOrUndefined} from "util";
 
 @Component({
     selector: 'smart-table',
@@ -87,18 +88,29 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
     }
 
     ngAfterContentInit() {
-        this.columns.forEach(column => {
-            Object.assign(column, {'selected': true});
-            this.checkbox_filter_list.forEach(filter => {
-                if (filter.table === this.table_tag) {
-                    if (filter.columns.contains(column.property)) {
-                        Object.assign(column, {'selected': false});
-                    } else {
-                        Object.assign(column, {'selected': true});
-                    }
+        if (this.checkbox_filter_list.length < 1) {
+            this.columns.forEach(column => {
+                if (column.is_column_hidden) {
+                    Object.assign(column, {'selected': true});
+                    this.setCheckboxFilter(column);
+                } else {
+                    Object.assign(column, {'selected': true});
                 }
             });
-        });
+        } else {
+            this.columns.forEach(column => {
+                Object.assign(column, {'selected': true});
+                this.checkbox_filter_list.forEach(filter => {
+                    if (filter.table === this.table_tag) {
+                        if (filter.columns.contains(column.property)) {
+                            Object.assign(column, {'selected': false});
+                        } else {
+                            Object.assign(column, {'selected': true});
+                        }
+                    }
+                });
+            });
+        }
     }
 
     ngDoCheck(): void {
@@ -109,8 +121,8 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
     }
 
     public setCheckboxFilter(column) {
-        column['selected'] = !column['selected'];
-        if (column['selected']) {
+        column.selected = !column.selected;
+        if (column.selected) {
             this.checkbox_filter_list.forEach(filter => {
                 if (filter.table === this.table_tag) {
                     filter.columns.splice(filter.columns.indexOf(column.property), 1);
@@ -126,7 +138,7 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
                 this.checkbox_filter_list.push(checkbox_filter);
             } else {
                 this.checkbox_filter_list.forEach(filter => {
-                    if (filter.table === this.table_tag) {
+                    if (filter.table === this.table_tag && !filter.columns.contains(column.property)) {
                         filter.columns.push(column.property);
                     }
                 });
