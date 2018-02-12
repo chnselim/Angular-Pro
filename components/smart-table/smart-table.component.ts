@@ -35,9 +35,6 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
     @Input('source-selector')
     public source_selector = null;
 
-    @Input('table-tag')
-    public table_tag: string;
-
     public checkbox_filter_list: CheckboxFilterModel[] = [];
 
     public changePage(page: number) {
