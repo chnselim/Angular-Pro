@@ -54,7 +54,6 @@ export class QuickTableComponent extends ComponentBase implements AfterViewInit 
 
     public get renderFilter(): boolean {
         return this.columns.some((column) => {
-
             return column.filter_template != null;
         });
     }
