@@ -82,35 +82,23 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
     ngOnInit() {
         this.refresh();
         this.key_value_differ.diff(this.query_parameters);
-        if (this.storage_service.getCheckboxFilter()) {
-            this.checkbox_filter_list = this.storage_service.getCheckboxFilter();
-        }
+        this.checkbox_filter_list = this.storage_service.getCheckboxFilter() || [];
     }
 
     ngAfterContentInit() {
-        if (this.checkbox_filter_list.length < 1) {
-            this.columns.forEach(column => {
-                if (column.is_column_hidden) {
-                    Object.assign(column, {'selected': true});
-                    this.setCheckboxFilter(column);
-                } else {
-                    Object.assign(column, {'selected': true});
+        this.columns.forEach(column => {
+            Object.assign(column, {'selected': true});
+            if (column.is_column_hidden) {
+                this.setCheckboxFilter(column);
+            }
+            this.checkbox_filter_list.forEach(filter => {
+                if (filter.table === this.table_tag) {
+                    if (filter.columns.contains(column.property)) {
+                        Object.assign(column, {'selected': false});
+                    }
                 }
             });
-        } else {
-            this.columns.forEach(column => {
-                Object.assign(column, {'selected': true});
-                this.checkbox_filter_list.forEach(filter => {
-                    if (filter.table === this.table_tag) {
-                        if (filter.columns.contains(column.property)) {
-                            Object.assign(column, {'selected': false});
-                        } else {
-                            Object.assign(column, {'selected': true});
-                        }
-                    }
-                });
-            });
-        }
+        });
     }
 
     ngDoCheck(): void {

@@ -5,6 +5,30 @@
             <div class="col-lg-12">
                 <div *ngIf="title">
                     <p><b>{{title}}</b>
+                        <ng-container *ngIf="table_tag">
+                            <ul class="inline-block nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                                <li class="nav-item dropdown margin-right-10">
+                                    <i class="fa fa-filter margin-right-5 cursor-pointer text-nice-blue" id="filters"
+                                       data-toggle="dropdown" aria-expanded="false"></i>
+                                    <ul aria-labelledby="filters"
+                                        class="dropdown-menu width-200 no-margin-top no-border-radius border-1-black">
+                                        <ng-container *ngFor="let column of columns">
+                                            <li class="cursor-pointer" *ngIf="column !== columns.toArray()[this.columns.length-1] &&
+                                                                  column !== columns.toArray()[1] &&
+                                                                  column !== columns.toArray()[0]">
+                                                <a class="dropdown-item" (click)="setCheckboxFilter(column);">
+                                                    <input [attr.id]="'checkboxCustom' + column.property"
+                                                           type="checkbox" [checked]="column.selected"
+                                                           class="checkbox-template">
+                                                    <label [attr.for]="'checkboxCustom' + column.property"
+                                                           class="nice-label language-button">{{column.title}}</label>
+                                                </a>
+                                            </li>
+                                        </ng-container>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </ng-container>
                         <b class="table-information" *ngIf="total_count">
                             Sayfa: <span>{{current_page}}</span> &nbsp; | &nbsp;
                             Toplam: <span>{{total_count}}</span>
@@ -19,33 +43,6 @@
                     </b>
                 </p>
             </div>
-            <div class="col-lg-12" *ngIf="table_tag">
-                <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
-                    <li class="nav-item dropdown margin-right-10">
-                        <a class="btn btn-small btn-mat-blue cursor-pointer text-white" id="filters"
-                           data-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-table margin-right-5"></i>Sütunları Filtrele
-                        </a>
-                        <ul aria-labelledby="filters"
-                            class="dropdown-menu width-200 bg-light-blue no-margin-top no-border-radius border-1-black">
-                            <ng-container *ngFor="let column of columns">
-                                <li class="cursor-pointer" *ngIf="column !== columns.toArray()[this.columns.length-1] &&
-                                                                  column !== columns.toArray()[1] &&
-                                                                  column !== columns.toArray()[0]"
-                                    (click)="setCheckboxFilter(column);">
-                                    <a class="dropdown-item">
-                                        <input [attr.id]="'checkboxCustom' + column.property"
-                                               type="checkbox" [checked]="column.selected"
-                                               class="checkbox-template">
-                                        <label [attr.for]="'checkboxCustom' + column.property"
-                                               class="nice-label language-button">{{column.title}}</label>
-                                    </a>
-                                </li>
-                            </ng-container>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
             <div class="col-lg-12">
                 <div class="card">
                     <div class="table-responsive">
@@ -56,7 +53,7 @@
                                     <span>#</span>
                                 </th>
                                 <ng-container *ngFor="let column of columns">
-                                    <th class="table-columns" *ngIf="column.selected"
+                                    <th *ngIf="column.selected" class="table-columns"
                                         [ngClass]="(column.table_column_class) ? column.table_column_class: ''">
                                     <span *ngIf="!column.sort_by"
                                           [textContent]="column.title"></span>
@@ -95,7 +92,8 @@
                                           [textContent]="content[column.property]"></span>
                                         <ng-template *ngIf="column.cell_template"
                                                      [ngTemplateOutlet]="column.cell_template"
-                                                     [ngOutletContext]="{item:content, column:column, value:content[column.property], index:index_list[index]}"></ng-template>
+                                                     [ngOutletContext]="{item:content, column:column, value:content[column.property],index:index_list[index]}">
+                                        </ng-template>
                                     </td>
                                 </ng-container>
                             </tr>
