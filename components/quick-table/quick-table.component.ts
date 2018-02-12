@@ -36,6 +36,9 @@ export class QuickTableComponent extends ComponentBase implements AfterViewInit 
     @Input('show-index-number')
     public show_index_number: boolean = false;
 
+    @Input('table-tag')
+    public table_tag: string;
+
     @Output('onPageChanged')
     public current_page_changed: EventEmitter<number> = new EventEmitter<number>();
 
