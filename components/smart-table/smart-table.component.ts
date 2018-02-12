@@ -92,7 +92,7 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
                 this.setCheckboxFilter(column);
             }
             this.checkbox_filter_list.forEach(filter => {
-                if (filter.table === this.table_tag) {
+                if (filter.table_tag === this.table_tag) {
                     if (filter.columns.contains(column.property)) {
                         Object.assign(column, {'selected': false});
                     }
@@ -112,21 +112,21 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
         column.selected = !column.selected;
         if (column.selected) {
             this.checkbox_filter_list.forEach(filter => {
-                if (filter.table === this.table_tag) {
+                if (filter.table_tag === this.table_tag) {
                     filter.columns.splice(filter.columns.indexOf(column.property), 1);
                 }
             });
         } else {
             const checkbox_filter: CheckboxFilterModel = new CheckboxFilterModel();
             if (this.checkbox_filter_list.every(filter => {
-                    return this.table_tag !== filter.table
+                    return this.table_tag !== filter.table_tag
                 })) {
-                checkbox_filter.table = this.table_tag;
+                checkbox_filter.table_tag = this.table_tag;
                 checkbox_filter.columns.push(column.property);
                 this.checkbox_filter_list.push(checkbox_filter);
             } else {
                 this.checkbox_filter_list.forEach(filter => {
-                    if (filter.table === this.table_tag && !filter.columns.contains(column.property)) {
+                    if (filter.table_tag === this.table_tag && !filter.columns.contains(column.property)) {
                         filter.columns.push(column.property);
                     }
                 });
