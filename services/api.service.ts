@@ -42,6 +42,7 @@ export abstract class APIServiceBase {
             .request(request_options.url, request_options)
             .toPromise()
             .then(response => {
+
                 const response_text: string = response.text();
                 if (response_text.length === 0) {
                     return new ResponseModel(null, response.headers, response.status);

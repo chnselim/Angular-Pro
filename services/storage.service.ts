@@ -1,4 +1,5 @@
 import {isNullOrUndefined} from 'util';
+import {CheckboxFilterModel} from '../models/checkbox-filter/checkbox-filter.model';
 
 export abstract class StorageServiceBase {
 
@@ -37,4 +38,12 @@ export abstract class StorageServiceBase {
     }
 
     protected abstract getLocalStoragePrefix(): string;
+
+    public setCheckboxFilter(checkbox_filter) {
+        this.set('checkbox_filter', checkbox_filter, true);
+    }
+
+    public getCheckboxFilter(): CheckboxFilterModel[] {
+        return this.get<CheckboxFilterModel[]>('checkbox_filter', true);
+    }
 }

@@ -1,0 +1,42 @@
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import 'nglinq/linq';
+
+@Component({
+    selector: 'multi-select-box',
+    templateUrl: './multi-select-box.component.html'
+})
+export class MultiSelectBoxComponent {
+
+    @Input('fa-icon')
+    public fa_icon: string;
+
+    @Input('color-class')
+    public fa_icon_color: string;
+
+    @Output('selected-listChange')
+    public selected_listChange: EventEmitter<any> = new EventEmitter();
+
+    @Input('selected-list')
+    public selected_list: any[] = [];
+
+    @Input()
+    public source: any[];
+
+    @Input('value-selector')
+    public value_selector: string = 'name';
+
+    public selectOrDeselectData(data) {
+        if (this.selected_list.contains(data)) {
+            this.selected_list = this.selected_list.filter((value) => {
+                return value !== data;
+            });
+        } else {
+            this.selected_list.push(data);
+        }
+        this.selected_listChange.emit(this.selected_list);
+    }
+
+    public isSelected(data: any): boolean {
+        return this.selected_list.contains(data);
+    }
+}
