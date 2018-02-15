@@ -8,10 +8,10 @@ import 'nglinq/linq';
 export class MultiSelectBoxComponent {
 
     @Input('fa-icon')
-    public fa_icon: string;
+    public fa_icon: string = 'fa-plus-square-o';
 
     @Input('color-class')
-    public fa_icon_color: string;
+    public fa_icon_color: string = 'soft-blue';
 
     @Output('selected-listChange')
     public selected_listChange: EventEmitter<any> = new EventEmitter();
