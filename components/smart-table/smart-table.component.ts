@@ -1,11 +1,12 @@
 import {
-    Component, DoCheck, Input, IterableDiffer, IterableDiffers, KeyValueDiffers, OnInit,
+    Component, DoCheck, Input, IterableDiffer, IterableDiffers, KeyValueDiffers, OnInit, QueryList,
     SimpleChanges
 } from '@angular/core';
 import {QuickTableComponent} from '../quick-table/quick-table.component';
 import {GeneralAPIServiceBase} from '../../services/general-api.service';
 import 'nglinq/linq';
 import {QuickTableColumnDirective} from '../quick-table/quick-table-column.directive';
+import {StorageServiceBase} from "../../services/storage.service";
 
 @Component({
     selector: 'smart-table',
@@ -16,8 +17,8 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
 
     public key_value_differ: any;
 
-    public constructor(private differs: KeyValueDiffers) {
-        super();
+    public constructor(protected storage_service: StorageServiceBase, private differs: KeyValueDiffers) {
+        super(storage_service);
         this.key_value_differ = this.differs.find(this.query_parameters).create(null);
     }
 
