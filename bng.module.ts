@@ -17,6 +17,7 @@ import {CardContentComponent} from './components/card/card-content/card-content.
 import {CardFooterComponent} from './components/card/card-footer/card-footer.component';
 import {CardContentRowComponent} from './components/card/card-content-row/card-content-row.component';
 import {CardComponent} from './components/card/card.component';
+import {MultiSelectBoxComponent} from './components/multi-select-box/multi-select-box.component';
 
 @NgModule({
     declarations: [
@@ -27,6 +28,7 @@ import {CardComponent} from './components/card/card.component';
         QuickSelectItemDirective,
         PaginationComponent,
         SmartTableComponent,
+        MultiSelectBoxComponent,
         LoaderComponent,
         CardHeaderComponent,
         CardContentComponent,
@@ -49,6 +51,7 @@ import {CardComponent} from './components/card/card.component';
         QuickSelectItemDirective,
         PaginationComponent,
         SmartTableComponent,
+        MultiSelectBoxComponent,
         LoaderComponent,
         CardHeaderComponent,
         CardContentComponent,
