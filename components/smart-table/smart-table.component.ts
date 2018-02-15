@@ -1,25 +1,24 @@
 import {
-    AfterContentInit, Component, DoCheck, Input, KeyValueDiffers, OnInit, SimpleChanges
+    Component, DoCheck, Input, IterableDiffer, IterableDiffers, KeyValueDiffers, OnInit, QueryList,
+    SimpleChanges
 } from '@angular/core';
-import {CheckboxFilterModel} from '../../../../src/app/models/common/checkbox-filter/checkbox-filter.model';
-import {GeneralAPIServiceBase} from '../../services/general-api.service';
-import {QuickTableColumnDirective} from '../quick-table/quick-table-column.directive';
 import {QuickTableComponent} from '../quick-table/quick-table.component';
-import {StorageService} from '../../../../src/app/services/storage.service';
+import {GeneralAPIServiceBase} from '../../services/general-api.service';
 import 'nglinq/linq';
-import {isNullOrUndefined} from "util";
+import {QuickTableColumnDirective} from '../quick-table/quick-table-column.directive';
+import {StorageServiceBase} from "../../services/storage.service";
 
 @Component({
     selector: 'smart-table',
     templateUrl: '../quick-table/quick-table.component.html',
     providers: [{provide: QuickTableComponent, useExisting: SmartTableComponent}]
 })
-export class SmartTableComponent extends QuickTableComponent implements OnInit, DoCheck, AfterContentInit {
+export class SmartTableComponent extends QuickTableComponent implements OnInit, DoCheck {
 
     public key_value_differ: any;
 
-    public constructor(private differs: KeyValueDiffers, private storage_service: StorageService) {
-        super();
+    public constructor(protected storage_service: StorageServiceBase, private differs: KeyValueDiffers) {
+        super(storage_service);
         this.key_value_differ = this.differs.find(this.query_parameters).create(null);
     }
 
@@ -34,8 +33,6 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
 
     @Input('source-selector')
     public source_selector = null;
-
-    public checkbox_filter_list: CheckboxFilterModel[] = [];
 
     public changePage(page: number) {
         super.changePage(page);
@@ -79,23 +76,6 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
     ngOnInit() {
         this.refresh();
         this.key_value_differ.diff(this.query_parameters);
-        this.checkbox_filter_list = this.storage_service.getCheckboxFilter() || [];
-    }
-
-    ngAfterContentInit() {
-        this.columns.forEach(column => {
-            Object.assign(column, {'selected': true});
-            if (column.is_column_hidden) {
-                this.setCheckboxFilter(column);
-            }
-            this.checkbox_filter_list.forEach(filter => {
-                if (filter.table_tag === this.table_tag) {
-                    if (filter.columns.contains(column.property)) {
-                        Object.assign(column, {'selected': false});
-                    }
-                }
-            });
-        });
     }
 
     ngDoCheck(): void {
@@ -104,31 +84,5 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
             this.refresh();
         }
     }
-
-    public setCheckboxFilter(column) {
-        column.selected = !column.selected;
-        if (column.selected) {
-            this.checkbox_filter_list.forEach(filter => {
-                if (filter.table_tag === this.table_tag) {
-                    filter.columns.splice(filter.columns.indexOf(column.property), 1);
-                }
-            });
-        } else {
-            const checkbox_filter: CheckboxFilterModel = new CheckboxFilterModel();
-            if (this.checkbox_filter_list.every(filter => {
-                    return this.table_tag !== filter.table_tag
-                })) {
-                checkbox_filter.table_tag = this.table_tag;
-                checkbox_filter.columns.push(column.property);
-                this.checkbox_filter_list.push(checkbox_filter);
-            } else {
-                this.checkbox_filter_list.forEach(filter => {
-                    if (filter.table_tag === this.table_tag && !filter.columns.contains(column.property)) {
-                        filter.columns.push(column.property);
-                    }
-                });
-            }
-        }
-        this.storage_service.setCheckboxFilter(this.checkbox_filter_list);
-    }
 }
+
