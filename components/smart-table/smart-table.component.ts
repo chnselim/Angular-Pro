@@ -85,4 +85,3 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
         }
     }
 }
-
