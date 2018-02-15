@@ -25,6 +25,6 @@ export class QuickTableColumnDirective {
 
     public is_column_sort_icon_descending: boolean;
 
-    @Input('hidden')
-    public is_column_hidden: boolean = false;
+    @Input('visibility-status')
+    public visibility_status: string = 'shown';
 }
