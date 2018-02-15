@@ -151,7 +151,7 @@ export class QuickTableComponent extends ComponentBase implements OnChanges, Aft
         this.storage_service.setCheckboxFilter(this.checkbox_filter_storage_list);
     }
 
-    public selectableColumns() {
+    public getFilterableColumns() {
         return this.columns.filter(column => column.visibility_status !== 'permanent');
     }
 }
