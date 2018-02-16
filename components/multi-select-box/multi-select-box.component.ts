@@ -1,11 +1,12 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, Output} from '@angular/core';
 import 'nglinq/linq';
+declare const $: any;
 
 @Component({
     selector: 'multi-select-box',
     templateUrl: './multi-select-box.component.html'
 })
-export class MultiSelectBoxComponent {
+export class MultiSelectBoxComponent implements AfterViewInit {
 
     @Input('fa-icon')
     public fa_icon: string = 'fa-plus-square-o';
@@ -38,5 +39,11 @@ export class MultiSelectBoxComponent {
 
     public isSelected(data: any): boolean {
         return this.selected_list.contains(data);
+    }
+
+    ngAfterViewInit() {
+        $('.dropdown-menu').on('click', function (e) {
+            e.stopPropagation();
+        });
     }
 }
