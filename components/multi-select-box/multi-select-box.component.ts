@@ -42,10 +42,8 @@ export class MultiSelectBoxComponent implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        $('document').ready(function () {
-            $('.dropdown-menu').on('click', function (e) {
-                e.stopPropagation();
-            });
+        $('.dropdown-menu').on('click', function (e) {
+            e.stopPropagation();
         });
     }
 }
