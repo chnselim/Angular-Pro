@@ -2,7 +2,7 @@
     <li class="nav-item dropdown margin-right-10">
         <i class="fa {{fa_icon}} {{fa_icon_color}} margin-right-5 cursor-pointer" id="selectBox"
            data-toggle="dropdown" aria-expanded="false"></i>
-        <ul aria-labelledby="selectBox" class="dropdown-menu width-200 no-margin-top no-border-radius border-1-black">
+        <ul aria-labelledby="selectBox" class="dropdown-menu dropdown-menu-form width-200 no-margin-top no-border-radius border-1-black">
             <li class="cursor-pointer" *ngFor="let data of source;">
                 <a class="dropdown-item" (click)="selectOrDeselectData(data);">
                     <input type="checkbox" [checked]="isSelected(data)"
