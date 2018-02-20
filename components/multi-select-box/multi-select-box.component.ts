@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, EventEmitter, Input, Output} from '@angular/core';
 import 'nglinq/linq';
-
 declare const $: any;
 
 @Component({
