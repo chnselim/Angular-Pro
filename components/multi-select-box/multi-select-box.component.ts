@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, EventEmitter, Input, Output} from '@angular/core';
 import 'nglinq/linq';
+
 declare const $: any;
 
 @Component({
@@ -43,7 +44,9 @@ export class MultiSelectBoxComponent implements AfterViewInit {
 
     ngAfterViewInit() {
         $('.dropdown-menu').on('click', function (e) {
-            e.stopPropagation();
+            if($(this).hasClass('dropdown-menu-form')) {
+                e.stopPropagation();
+            }
         });
     }
 }
