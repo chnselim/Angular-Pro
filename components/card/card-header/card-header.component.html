@@ -1,24 +1,18 @@
-<div class="item no-padding">
-    <div class="recent-updates">
-        <div class="card-body">
-            <div class="user-detail-panel-bottom-buttons">
-                <div class="col-lg-12">
-                    <a class="feed-profile" *ngIf="header_image">
-                        <img class="card-header-image margin-left-10" src={{header_image}} [ngStyle]="{'width': header_image_width}"
-                             *ngIf="!has_no_border_radius">
-                        <img class="card-header-image" src={{header_image}}
-                             [ngStyle]="{'width': header_image_width}"
-                             *ngIf="has_no_border_radius">
-                    </a>
-                    <h3 class="card-header-title">
-                        <i *ngIf="!header_image" class="fa {{fa_icon}} fa-2x margin-bottom-20"></i><br *ngIf="!header_image">
-                        {{header_title}}
-                    </h3>
-                    <p class="text-capitalize card-text-blue" *ngIf="name !== 'true'">{{name}}</p>
-                    <hr *ngIf="header_image">
-                    <ng-content></ng-content>
-                </div>
-            </div>
-        </div>
+<div class="item padding-20 align-center">
+    <div class="col-lg-12">
+        <a class="feed-profile" *ngIf="header_image">
+            <img class="card-header-image margin-left-10" src={{header_image}}
+                 [ngStyle]="{'width': header_image_width}"
+                 *ngIf="!has_no_border_radius">
+            <img class="card-header-image" src={{header_image}}
+                 [ngStyle]="{'width': header_image_width}"
+                 *ngIf="has_no_border_radius">
+        </a>
+        <h3><i *ngIf="!header_image && fa_icon" class="fa {{fa_icon}} fa-2x"
+               [ngClass]="(name || header_title) ? 'margin-bottom-20': ''"></i>
+            <br *ngIf="!header_image">{{header_title}}</h3>
+        <p class="text-capitalize card-text-blue" *ngIf="name && name !== 'true'">{{name}}</p>
+        <hr *ngIf="header_image">
+        <ng-content></ng-content>
     </div>
 </div>

@@ -65,8 +65,6 @@ export class QuickTableComponent extends ComponentBase implements OnChanges, Aft
 
     public selected_checkbox_filter_list: any[] = [];
 
-    public has_current_page_or_per_page_changed: boolean = false;
-
     public get renderFilter(): boolean {
         return this.columns.some((column) => {
             return column.filter_template != null;
@@ -78,14 +76,12 @@ export class QuickTableComponent extends ComponentBase implements OnChanges, Aft
     }
 
     public changePage(page: number) {
-        this.has_current_page_or_per_page_changed = true;
         this.current_page = page;
         this.current_page_changed.emit(page);
         this.getIndexNumberList(page);
     }
 
     public changePerPage(selected_item: QuickSelectItemDirective) {
-        this.has_current_page_or_per_page_changed = true;
         this.selected_per_page_number = selected_item;
         const query_value = selected_item.value;
         this.per_page = parseInt(query_value);
