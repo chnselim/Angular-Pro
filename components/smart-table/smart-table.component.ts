@@ -83,20 +83,20 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
 
     public getSourceFromAPI() {
         this.is_request_loading = true;
-        if (this.query_parameters) {
-            this.query_parameters.forEach((value,key) => {
-                this.url_params[key] = value;
-            });
-        }
-        this.setDefaultURLParameters();
-        for (let param in this.url_params) {
-            this.applyQueryParameters(param);
-            if (!this.has_current_page_or_per_page_changed) {
-                this.current_page = parseInt(this.url_params['page']);
-                this.per_page = parseInt(this.url_params['per_page']);
-            }
-        }
-        this.router.navigate([], {queryParams: this.url_params});
+        // if (this.query_parameters) {
+        //     this.query_parameters.forEach((value,key) => {
+        //         this.url_params[key] = value;
+        //     });
+        // }
+        // this.setDefaultURLParameters();
+        // for (let param in this.url_params) {
+        //     this.applyQueryParameters(param);
+        //     if (!this.has_current_page_or_per_page_changed) {
+        //         this.current_page = parseInt(this.url_params['page']);
+        //         this.per_page = parseInt(this.url_params['per_page']);
+        //     }
+        // }
+        // this.router.navigate([], {queryParams: this.url_params});
         this.api_source
             .getResponseModel(this.current_page, this.per_page, this.query_parameters, this.tag, this.sort_by, this.is_column_sort_by_descending)
             .then(source_response => {
@@ -127,7 +127,7 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
     ngDoCheck(): void {
         const key_value_changed = this.key_value_differ.diff(this.query_parameters);
         if (key_value_changed) {
-            this.applyURLParameters();
+            // this.applyURLParameters();
             this.refresh();
         }
     }
