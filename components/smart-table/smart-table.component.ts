@@ -1,5 +1,5 @@
 import {
-    Component, DoCheck, Input, IterableDiffer, IterableDiffers, KeyValueDiffers, OnInit, QueryList,
+    Component, DoCheck, Input, IterableDiffer, IterableDiffers, KeyValueDiffer, KeyValueDiffers, OnInit, QueryList,
     SimpleChanges
 } from '@angular/core';
 import {QuickTableComponent} from '../quick-table/quick-table.component';
@@ -7,6 +7,7 @@ import {GeneralAPIServiceBase} from '../../services/general-api.service';
 import 'nglinq/linq';
 import {QuickTableColumnDirective} from '../quick-table/quick-table-column.directive';
 import {StorageServiceBase} from "../../services/storage.service";
+import {ActivatedRoute, NavigationEnd, NavigationError, NavigationStart, Router} from "@angular/router";
 
 @Component({
     selector: 'smart-table',
@@ -16,11 +17,6 @@ import {StorageServiceBase} from "../../services/storage.service";
 export class SmartTableComponent extends QuickTableComponent implements OnInit, DoCheck {
 
     public key_value_differ: any;
-
-    public constructor(protected storage_service: StorageServiceBase, private differs: KeyValueDiffers) {
-        super(storage_service);
-        this.key_value_differ = this.differs.find(this.query_parameters).create(null);
-    }
 
     @Input('api-source')
     public api_source: GeneralAPIServiceBase<any>;
@@ -33,6 +29,13 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
 
     @Input('source-selector')
     public source_selector = null;
+
+    public url_params = JSON.parse(JSON.stringify(this.router['currentUrlTree']['queryParams']));
+
+    public constructor(protected storage_service: StorageServiceBase, private router: Router, private route: ActivatedRoute, private differs: KeyValueDiffers) {
+        super(storage_service);
+        this.key_value_differ = this.differs.find(this.query_parameters).create(null);
+    }
 
     public changePage(page: number) {
         super.changePage(page);
@@ -49,8 +52,51 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
         this.refresh();
     }
 
+    private applyQueryParameters(param) {
+        if (this.query_parameters.get(param) !== this.url_params[param]) {
+            this.query_parameters.set(param, this.url_params[param]);
+        }
+    }
+
+    private applyURLParameters() {
+        this.query_parameters.set('page', (parseInt(this.query_parameters.get('page')) + 1).toString());
+        this.query_parameters.forEach((value, key) => {
+            this.url_params[key] = value;
+        });
+        this.checkDeletableURLParameters();
+    }
+
+    private checkDeletableURLParameters() {
+        for (let param in this.url_params) {
+            if (!this.query_parameters.has(param)) {
+                delete this.url_params[param];
+            }
+        }
+    }
+
+    private setDefaultURLParameters() {
+        if (!this.url_params['page'] || !this.url_params['per_page']) {
+            this.url_params['page'] = this.current_page;
+            this.url_params['per_page'] = this.per_page;
+        }
+    }
+
     public getSourceFromAPI() {
         this.is_request_loading = true;
+        if (this.query_parameters) {
+            this.query_parameters.forEach((value,key) => {
+                this.url_params[key] = value;
+            });
+        }
+        this.setDefaultURLParameters();
+        for (let param in this.url_params) {
+            this.applyQueryParameters(param);
+            if (!this.has_current_page_or_per_page_changed) {
+                this.current_page = parseInt(this.url_params['page']);
+                this.per_page = parseInt(this.url_params['per_page']);
+            }
+        }
+        this.router.navigate([], {queryParams: this.url_params});
         this.api_source
             .getResponseModel(this.current_page, this.per_page, this.query_parameters, this.tag, this.sort_by, this.is_column_sort_by_descending)
             .then(source_response => {
@@ -81,6 +127,7 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
     ngDoCheck(): void {
         const key_value_changed = this.key_value_differ.diff(this.query_parameters);
         if (key_value_changed) {
+            this.applyURLParameters();
             this.refresh();
         }
     }
