@@ -1,6 +1,6 @@
 {
   "name": "bng-angular-base",
-  "version": "1.0.30",
+  "version": "1.0.31",
   "dependencies": {
     "@angular/common": "^4.0.0",
     "@angular/compiler": "^4.0.0",
