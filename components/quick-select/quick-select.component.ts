@@ -25,6 +25,9 @@ export class QuickSelectComponent extends ComponentBase {
     @Input('name-selector')
     public name_selector: string = 'name';
 
+    @Input('value-selector')
+    public value_selector: string = 'value';
+
     @Input('value')
     public default_value: string;
 
