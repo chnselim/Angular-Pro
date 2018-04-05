@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <p class="margin-bottom-5 font-size-14"><b *ngIf="title">{{title}}</b>
+                <p><b *ngIf="title">{{title}}</b>
                     <multi-select-box *ngIf="table_tag"
                                       [source]="getFilterableColumns()"
                                       (selected-listChange)="setCheckboxFilter($event)"
@@ -16,7 +16,8 @@
                         Sayfa: <span>{{current_page}}</span> &nbsp; | &nbsp;
                         Toplam: <span>{{total_count}}</span>
                     </b>
-                </p><div *ngIf="title" class="border-bottom"></div>
+                </p>
+                <hr *ngIf="title" class="margin-top-5">
             </div>
             <div class="col-lg-12">
                 <div class="card">

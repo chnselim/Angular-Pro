@@ -8,7 +8,7 @@
                  [ngStyle]="{'width': header_image_width}"
                  *ngIf="has_no_border_radius">
         </a>
-        <h3 *ngIf="!header_image && (header_title || fa_icon)">
+        <h3 *ngIf="!header_image">
             <i *ngIf="fa_icon" class="fa {{fa_icon}} fa-2x"
                [ngClass]="(name || header_title) ? 'margin-bottom-20': ''"></i>
             <br>{{header_title}}
