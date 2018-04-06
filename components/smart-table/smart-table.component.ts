@@ -6,7 +6,7 @@ import {QuickTableComponent} from '../quick-table/quick-table.component';
 import {GeneralAPIServiceBase} from '../../services/general-api.service';
 import 'nglinq/linq';
 import {QuickTableColumnDirective} from '../quick-table/quick-table-column.directive';
-import {StorageServiceBase} from "../../services/storage.service";
+import {StorageServiceBase} from '../../services/storage.service';
 
 @Component({
     selector: 'smart-table',
@@ -15,6 +15,8 @@ import {StorageServiceBase} from "../../services/storage.service";
 })
 export class SmartTableComponent extends QuickTableComponent implements OnInit, DoCheck {
 
+    private refresh_on_init: boolean = false;
+    private initialized: boolean = false;
     public key_value_differ: any;
 
     public constructor(protected storage_service: StorageServiceBase, private differs: KeyValueDiffers) {
@@ -33,6 +35,9 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
 
     @Input('source-selector')
     public source_selector = null;
+
+    @Input('auto-refresh')
+    public auto_refresh: boolean = true;
 
     public changePage(page: number) {
         super.changePage(page);
@@ -70,11 +75,18 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
     }
 
     refresh(): void {
-        this.getSourceFromAPI();
+        if (this.initialized) {
+            this.getSourceFromAPI();
+        } else {
+            this.refresh_on_init = true;
+        }
     }
 
     ngOnInit() {
-        this.refresh();
+        this.initialized = true;
+        if (this.auto_refresh || this.refresh_on_init) {
+            this.refresh();
+        }
         this.key_value_differ.diff(this.query_parameters);
     }
 
