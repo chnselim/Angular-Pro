@@ -1,102 +1,99 @@
 <smart-loader [hidden]="!is_request_loading"></smart-loader>
 <section class="tables" [hidden]="is_request_loading">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12">
-                <p class="margin-bottom-5 font-size-14"><b *ngIf="title">{{title}}</b>
-                    <multi-select-box *ngIf="table_tag"
-                                      [source]="getFilterableColumns()"
-                                      (selected-listChange)="setCheckboxFilter($event)"
-                                      [selected-list]="selected_checkbox_filter_list"
-                                      value-selector="title"
-                                      fa-icon="fa-filter"
-                                      color-class="text-nice-blue"></multi-select-box>
-                    <b [ngClass]="title ? 'table-information': 'table-information margin-bottom-10'"
-                       *ngIf="total_count">
-                        Sayfa: <span>{{current_page}}</span> &nbsp; | &nbsp;
-                        Toplam: <span>{{total_count}}</span>
-                    </b>
-                </p><div *ngIf="title" class="border-bottom"></div>
-            </div>
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="table-responsive">
-                        <table class="table table-sm table-striped table-bordered d-lg-table no-margin-bottom">
-                            <thead>
-                            <tr>
-                                <th *ngIf="show_index_number" class="table-columns">
-                                    <span>#</span>
-                                </th>
-                                <ng-container *ngFor="let column of columns">
-                                    <th *ngIf="checkColumnVisibilityStatus(column);" class="table-columns"
-                                        [ngClass]="(column.table_column_class) ? column.table_column_class: ''">
+    <div class="row">
+        <div class="col-lg-12">
+            <p class="margin-bottom-5 font-size-14"><b *ngIf="title">{{title}}</b>
+                <multi-select-box *ngIf="table_tag"
+                                  [source]="getFilterableColumns()"
+                                  (selected-listChange)="setCheckboxFilter($event)"
+                                  [selected-list]="selected_checkbox_filter_list"
+                                  value-selector="title"
+                                  fa-icon="fa-filter"
+                                  color-class="text-nice-blue"></multi-select-box>
+                <b [ngClass]="title ? 'table-information': 'table-information margin-bottom-10'"
+                   *ngIf="total_count">
+                    Sayfa: <span>{{current_page}}</span> &nbsp; | &nbsp;
+                    Toplam: <span>{{total_count}}</span>
+                </b>
+            </p>
+            <div *ngIf="title" class="border-bottom"></div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table table-sm table-striped table-bordered d-lg-table no-margin-bottom">
+                        <thead>
+                        <tr>
+                            <th *ngIf="show_index_number" class="table-columns">
+                                <span>#</span>
+                            </th>
+                            <ng-container *ngFor="let column of columns">
+                                <th *ngIf="checkColumnVisibilityStatus(column);" class="table-columns"
+                                    [ngClass]="(column.table_column_class) ? column.table_column_class: ''">
                                     <span *ngIf="!column.sort_by"
                                           [textContent]="column.title"></span>
-                                        <a class="underline"
-                                           *ngIf="column.sort_by"
-                                           (click)="changeSortType(column);">
-                                            {{column.title}}
-                                            <i *ngIf="column.is_column_sort_icon_descending !== undefined && sort_by === column.sort_by"
-                                               [ngClass]="(column.is_column_sort_icon_descending) ? 'fa fa-arrow-circle-up margin-left-5 text-success': 'fa fa-arrow-circle-down margin-left-5 text-danger'"></i>
-                                        </a>
-                                    </th>
-                                </ng-container>
-                            </tr>
-                            <tr *ngIf="renderFilter">
-                                <th *ngIf="show_index_number"></th>
-                                <ng-container *ngFor="let column of columns">
-                                    <th *ngIf="checkColumnVisibilityStatus(column);">
-                                        <ng-template *ngIf="column.filter_template"
-                                                     [ngTemplateOutlet]="column.filter_template"
-                                                     [ngOutletContext]="{title:column.title}"></ng-template>
-                                    </th>
-                                </ng-container>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr *ngFor="let content of source;let index = index;">
-                                <td *ngIf="show_index_number" class="table-rows">
-                                    <a [routerLink]="content.id" class="text-black underline">
-                                        <strong>{{index_list[index]}}</strong>
+                                    <a class="underline"
+                                       *ngIf="column.sort_by"
+                                       (click)="changeSortType(column);">
+                                        {{column.title}}
+                                        <i *ngIf="column.is_column_sort_icon_descending !== undefined && sort_by === column.sort_by"
+                                           [ngClass]="(column.is_column_sort_icon_descending) ? 'fa fa-arrow-circle-up margin-left-5 text-success': 'fa fa-arrow-circle-down margin-left-5 text-danger'"></i>
                                     </a>
-                                </td>
-                                <ng-container *ngFor="let column of columns">
-                                    <td *ngIf="checkColumnVisibilityStatus(column);" class="table-rows">
+                                </th>
+                            </ng-container>
+                        </tr>
+                        <tr *ngIf="renderFilter">
+                            <th *ngIf="show_index_number"></th>
+                            <ng-container *ngFor="let column of columns">
+                                <th *ngIf="checkColumnVisibilityStatus(column);">
+                                    <ng-template *ngIf="column.filter_template"
+                                                 [ngTemplateOutlet]="column.filter_template"
+                                                 [ngOutletContext]="{title:column.title}"></ng-template>
+                                </th>
+                            </ng-container>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let content of source;let index = index;">
+                            <td *ngIf="show_index_number" class="table-rows">
+                                <a [routerLink]="content.id" class="text-black underline">
+                                    <strong>{{index_list[index]}}</strong>
+                                </a>
+                            </td>
+                            <ng-container *ngFor="let column of columns">
+                                <td *ngIf="checkColumnVisibilityStatus(column);" class="table-rows">
                                     <span *ngIf="!column.cell_template && column.property"
                                           [textContent]="content[column.property]"></span>
-                                        <ng-template *ngIf="column.cell_template"
-                                                     [ngTemplateOutlet]="column.cell_template"
-                                                     [ngOutletContext]="{item:content, column:column, value:content[column.property], index:index_list[index]}"></ng-template>
-                                    </td>
-                                </ng-container>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <quick-select (item-selected)="changePerPage($event)" ngDefaultControl *ngIf="total_count > 10"
-                                  ngClass="per-page-select-options" [selected-item]="selected_per_page_number">
-                        <quick-select-item value="10" name="10"></quick-select-item>
-                        <quick-select-item value="25" name="25"></quick-select-item>
-                        <quick-select-item value="50" name="50" *ngIf="total_count > 25"></quick-select-item>
-                        <quick-select-item value="100" name="100" *ngIf="total_count > 50"></quick-select-item>
-                    </quick-select>
+                                    <ng-template *ngIf="column.cell_template"
+                                                 [ngTemplateOutlet]="column.cell_template"
+                                                 [ngOutletContext]="{item:content, column:column, value:content[column.property], index:index_list[index]}"></ng-template>
+                                </td>
+                            </ng-container>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div *ngIf="source">
-                    <p *ngIf="source.length === 0" class="align-center">Gösterilecek veri bulunamadı.</p>
-                </div>
+                <quick-select (item-selected)="changePerPage($event)" ngDefaultControl *ngIf="total_count > 10"
+                              ngClass="per-page-select-options" [selected-item]="selected_per_page_number">
+                    <quick-select-item value="10" name="10"></quick-select-item>
+                    <quick-select-item value="25" name="25"></quick-select-item>
+                    <quick-select-item value="50" name="50" *ngIf="total_count > 25"></quick-select-item>
+                    <quick-select-item value="100" name="100" *ngIf="total_count > 50"></quick-select-item>
+                </quick-select>
+            </div>
+            <div *ngIf="source">
+                <p *ngIf="source.length === 0" class="align-center">Gösterilecek veri bulunamadı.</p>
             </div>
         </div>
     </div>
     <div *ngIf="renderPagination">
-        <div class="container-fluid" [hidden]="is_request_loading">
-            <div class="row">
-                <div class="col-lg-12">
-                    <pagination (onPageChanged)="changePage($event)"
-                                [total-item-count]="total_count"
-                                [item-count-per-page]="per_page"
-                                [current-page]="current_page">
-                    </pagination>
-                </div>
+        <div class="row" [hidden]="is_request_loading">
+            <div class="col-lg-12">
+                <pagination (onPageChanged)="changePage($event)"
+                            [total-item-count]="total_count"
+                            [item-count-per-page]="per_page"
+                            [current-page]="current_page">
+                </pagination>
             </div>
         </div>
     </div>
