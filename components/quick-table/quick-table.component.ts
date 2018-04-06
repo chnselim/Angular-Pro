@@ -51,7 +51,7 @@ export class QuickTableComponent extends ComponentBase implements OnChanges, Aft
     @ContentChildren(QuickTableColumnDirective)
     public columns: QueryList<QuickTableColumnDirective>;
 
-    public is_request_loading: boolean = true;
+    public is_request_loading: boolean;
 
     public index_list = [];
 
