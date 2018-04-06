@@ -83,6 +83,7 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
     }
 
     ngOnInit() {
+        this.is_request_loading = true;
         this.initialized = true;
         if (this.auto_refresh || this.refresh_on_init) {
             this.refresh();
