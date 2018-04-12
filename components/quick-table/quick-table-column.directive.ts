@@ -8,6 +8,9 @@ export class QuickTableColumnDirective {
     @Input()
     public title: string;
 
+    @Input('short-title')
+    public short_title: string;
+
     @Input()
     public property: string;
 
