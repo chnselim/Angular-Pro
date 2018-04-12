@@ -3,10 +3,10 @@ import {
 } from '@angular/core';
 import {QuickTableColumnDirective} from './quick-table-column.directive';
 import {ComponentBase} from '../base.component';
-import {isNullOrUndefined} from "util";
-import {QuickSelectItemDirective} from "bng-angular-base/components/quick-select/quick-select-item.directive";
-import {el} from "@angular/platform-browser/testing/src/browser_util";
-import {StorageServiceBase} from "../../services/storage.service";
+import {isNullOrUndefined} from 'util';
+import {QuickSelectItemDirective} from 'bng-angular-base/components/quick-select/quick-select-item.directive';
+import {el} from '@angular/platform-browser/testing/src/browser_util';
+import {StorageServiceBase} from '../../services/storage.service';
 import {CheckboxFilterModel} from '../../models/checkbox-filter/checkbox-filter.model';
 
 @Component({
@@ -63,7 +63,7 @@ export class QuickTableComponent extends ComponentBase implements OnChanges, Aft
 
     public checkbox_filter_storage_list: CheckboxFilterModel[] = [];
 
-    public selected_checkbox_filter_list: any[] = [];
+    public checkbox_filter_checked_list: any[] = [];
 
     public get renderFilter(): boolean {
         return this.columns.some((column) => {
@@ -89,7 +89,7 @@ export class QuickTableComponent extends ComponentBase implements OnChanges, Aft
         this.getIndexNumberList(this.current_page);
     }
 
-    public changeSortType(column) {
+    public changeSortType(column: QuickTableColumnDirective) {
         this.sort_by = column.sort_by;
         if (column.is_column_sort_icon_descending) {
             this.is_column_sort_by_descending = false;
@@ -114,15 +114,25 @@ export class QuickTableComponent extends ComponentBase implements OnChanges, Aft
     ngAfterContentInit() {
         this.getIndexNumberList(this.current_page);
         this.selected_per_page_number = {value: this.per_page.toString(), name: this.per_page.toString()};
-        this.selected_checkbox_filter_list = this.columns.filter(column => !this.checkbox_filter_storage_list
-            .any(filter => filter.table_tag === this.table_tag && filter.columns.contains(column.property))).filter(column => column.visibility_status !== 'hidden');
-        this.setCheckboxFilter(this.selected_checkbox_filter_list);
+        this.checkbox_filter_checked_list = this.columns
+            .filter(column => !this.checkbox_filter_storage_list.any(filter => filter.table_tag === this.table_tag && filter.columns.contains(column.property)))
+            .filter(column => column.visibility_status !== 'hidden');
+        this.checkbox_filter_storage_list.forEach(filter => {
+            if (filter.table_tag === this.table_tag) {
+                this.columns.forEach(column => {
+                    if (column.visibility_status === 'hidden' && !this.checkbox_filter_storage_list.any(filter => filter.table_tag === this.table_tag && filter.columns.contains(column.property))) {
+                        this.checkbox_filter_checked_list.push(column);
+                    }
+                });
+            }
+        });
+        this.setCheckboxFilter(this.checkbox_filter_checked_list);
     }
 
-    public checkColumnVisibilityStatus(column) {
+    public checkColumnVisibilityStatus(column: QuickTableColumnDirective) {
         if (this.checkbox_filter_storage_list.any(filter => {
-                return filter.table_tag === this.table_tag && filter.columns.contains(column.property)
-            })) {
+            return filter.table_tag === this.table_tag && filter.columns.contains(column.property)
+        })) {
             return false;
         }
         return true;
@@ -132,7 +142,9 @@ export class QuickTableComponent extends ComponentBase implements OnChanges, Aft
         const checkbox_filter_storage_save_model: CheckboxFilterModel = new CheckboxFilterModel();
         let selected_columns_property_list: any[] = [];
         let reversed_selected_columns = this.columns.filter(column => !selected_column_list.any(selected_column => selected_column === column));
-        if (this.checkbox_filter_storage_list.all(filter => {return this.table_tag !== filter.table_tag})) {
+        if (this.checkbox_filter_storage_list.all(filter => {
+            return this.table_tag !== filter.table_tag
+        })) {
             checkbox_filter_storage_save_model.table_tag = this.table_tag;
             reversed_selected_columns.forEach(selected_column => {
                 checkbox_filter_storage_save_model.columns.push(selected_column.property);

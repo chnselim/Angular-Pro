@@ -1,8 +1,7 @@
-import {AfterViewInit, Component, ContentChildren, EventEmitter, Input, OnInit, Output, QueryList} from '@angular/core';
+import {Component, ContentChildren, EventEmitter, Input, OnInit, Output, QueryList} from '@angular/core';
 import {ComponentBase} from '../base.component';
 import {QuickSelectItemDirective} from './quick-select-item.directive';
 import {QuickTableComponent} from '../quick-table/quick-table.component';
-import {el} from "@angular/platform-browser/testing/src/browser_util";
 
 @Component({
     selector: 'quick-select',
