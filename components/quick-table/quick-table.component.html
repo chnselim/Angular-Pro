@@ -1,12 +1,11 @@
-<smart-loader [hidden]="!is_request_loading"></smart-loader>
-<section class="tables" [hidden]="is_request_loading">
+<section class="tables">
     <div class="row">
         <div class="col-lg-12">
-            <p class="table-title"><b *ngIf="title">{{title}}</b>
+            <p class="margin-bottom-5 font-size-14"><b *ngIf="title">{{title}}</b>
                 <multi-select-box *ngIf="table_tag"
                                   [source]="getFilterableColumns()"
                                   (selected-listChange)="setCheckboxFilter($event)"
-                                  [selected-list]="checkbox_filter_checked_list"
+                                  [selected-list]="selected_checkbox_filter_list"
                                   value-selector="title"
                                   fa-icon="fa-filter"
                                   color-class="text-nice-blue"></multi-select-box>
@@ -20,7 +19,7 @@
         </div>
         <div class="col-lg-12">
             <div class="card">
-                <div class="table-responsive">
+                <div class="table-responsive min-height-250">
                     <table class="table table-sm table-striped table-bordered d-lg-table no-margin-bottom">
                         <thead>
                         <tr>
@@ -30,16 +29,12 @@
                             <ng-container *ngFor="let column of columns">
                                 <th *ngIf="checkColumnVisibilityStatus(column);" class="table-columns"
                                     [ngClass]="(column.table_column_class) ? column.table_column_class: ''">
-                                    <b *ngIf="!column.sort_by"
-                                       [textContent]="column.short_title ? column.short_title:column.title"
-                                       [attr.rel]="'tooltip'"
-                                       [attr.data-title]="(column.short_title) ? column.title: ''"></b>
+                                    <span *ngIf="!column.sort_by"
+                                          [textContent]="column.title"></span>
                                     <a class="underline"
                                        *ngIf="column.sort_by"
                                        (click)="changeSortType(column);">
-                                        <b [textContent]="column.short_title ? column.short_title:column.title"
-                                           [attr.rel]="'tooltip'"
-                                           [attr.data-title]="(column.short_title) ? column.title: ''"></b>
+                                        {{column.title}}
                                         <i *ngIf="column.is_column_sort_icon_descending !== undefined && sort_by === column.sort_by"
                                            [ngClass]="(column.is_column_sort_icon_descending) ? 'fa fa-arrow-circle-up margin-left-5 text-success': 'fa fa-arrow-circle-down margin-left-5 text-danger'"></i>
                                     </a>
@@ -76,6 +71,7 @@
                         </tr>
                         </tbody>
                     </table>
+                    <smart-loader [hidden]="!is_request_loading"></smart-loader>
                 </div>
                 <quick-select (item-selected)="changePerPage($event)" ngDefaultControl *ngIf="total_count > 10"
                               ngClass="per-page-select-options" [selected-item]="selected_per_page_number">
@@ -91,7 +87,7 @@
         </div>
     </div>
     <div *ngIf="renderPagination">
-        <div class="row" [hidden]="is_request_loading">
+        <div class="row">
             <div class="col-lg-12">
                 <pagination (onPageChanged)="changePage($event)"
                             [total-item-count]="total_count"
