@@ -20,7 +20,7 @@
         </div>
         <div class="col-lg-12">
             <div class="card">
-                <div class="table-responsive min-height-250">
+                <div class="table-responsive">
                     <table class="table table-sm table-striped table-bordered d-lg-table no-margin-bottom">
                         <thead>
                         <tr>
@@ -78,7 +78,7 @@
                     </table>
                     <smart-loader [hidden]="!is_request_loading"></smart-loader>
                     <div *ngIf="source">
-                        <p *ngIf="source.length === 0" class="align-center margin-top-70">Gösterilecek veri bulunamadı.</p>
+                        <p *ngIf="source.length === 0" class="align-center margin-top-10">Gösterilecek veri bulunamadı.</p>
                     </div>
                 </div>
                 <quick-select (item-selected)="changePerPage($event)" ngDefaultControl *ngIf="total_count > 10"
