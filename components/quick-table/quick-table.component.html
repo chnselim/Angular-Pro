@@ -77,8 +77,8 @@
                         </tbody>
                     </table>
                     <smart-loader [hidden]="!is_request_loading"></smart-loader>
-                    <div *ngIf="source" class="margin-top-70">
-                        <p *ngIf="source.length === 0" class="align-center">Gösterilecek veri bulunamadı.</p>
+                    <div *ngIf="source">
+                        <p *ngIf="source.length === 0" class="align-center margin-top-70">Gösterilecek veri bulunamadı.</p>
                     </div>
                 </div>
                 <quick-select (item-selected)="changePerPage($event)" ngDefaultControl *ngIf="total_count > 10"
