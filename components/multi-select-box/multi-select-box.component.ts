@@ -12,7 +12,10 @@ export class MultiSelectBoxComponent implements AfterViewInit {
     public fa_icon: string = 'fa-plus-square-o';
 
     @Input('color-class')
-    public fa_icon_color: string = 'soft-blue';
+    public fa_icon_color: string;
+
+    @Input('background-color')
+    public background_color: string;
 
     @Output('selected-listChange')
     public selected_listChange: EventEmitter<any> = new EventEmitter();

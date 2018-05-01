@@ -1,13 +1,19 @@
 <ul class="inline-block nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
-    <li class="nav-item dropdown margin-right-10">
-        <i class="fa {{fa_icon}} {{fa_icon_color}} margin-right-5 cursor-pointer" id="selectBox"
-           data-toggle="dropdown" aria-expanded="false"></i>
-        <ul aria-labelledby="selectBox" class="dropdown-menu dropdown-menu-form width-200 no-margin-top no-border-radius border-1-black">
+    <li class="nav-item dropdown">
+        <button class="btn btn-xxs-circle btn-green-wb"
+                [attr.rel]="'tooltip'"
+                [attr.data-title]="'Filtrele'"
+                [attr.data-placement]="'top'"
+                id="selectBox"
+                data-toggle="dropdown" aria-expanded="false">
+            <i class="fa {{fa_icon}} {{fa_icon_color}} cursor-pointer"></i>
+        </button>
+        <ul aria-labelledby="selectBox"
+            class="dropdown-menu dropdown-menu-form min-width-200 margin-top-5 no-border-radius border-1-black" [ngStyle]="{'background-color': background_color}">
             <li class="cursor-pointer" *ngFor="let data of source;">
-                <a class="dropdown-item" (click)="selectOrDeselectData(data);">
-                    <input type="checkbox" [checked]="isSelected(data)"
-                           class="checkbox-template">
-                    <label class="nice-label language-button">{{data[value_selector]}}</label>
+                <a class="dropdown-item padding-left-10 padding-right-10" (click)="selectOrDeselectData(data);">
+                    <input type="checkbox" [checked]="isSelected(data)" class="checkbox-template">
+                    <label class="nice-label cursor-pointer font-size-13 no-margin-bottom">{{data[value_selector]}}</label>
                 </a>
             </li>
         </ul>
