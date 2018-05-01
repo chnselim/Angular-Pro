@@ -1,0 +1,28 @@
+<a *ngIf="!popover_content"
+   class="btn btn-{{button_size}} btn-{{button_color}}"
+   [attr.rel]="'tooltip'"
+   [attr.data-title]="tooltip ? tooltip: ''"
+   [attr.data-placement]="tooltip ? tooltip_placement: ''"
+   [routerLink]="router_link">
+    <i class="fa {{button_icon}}"></i>
+    {{button_value}}
+</a>
+
+<button *ngIf="popover_content"
+        class="btn btn-{{button_size}} btn-{{button_color}}"
+        [popover]="popover"
+        [popoverDismissTimeout]="popover_dismiss_time"
+        popoverPlacement="right"
+        [attr.rel]="'tooltip'"
+        [attr.data-title]="tooltip ? tooltip: ''"
+        [attr.data-placement]="tooltip ? tooltip_placement: ''"
+        (click)="copyToClipboard(clipboard);">
+    <i class="fa {{button_icon}}"></i>
+    {{button_value}}
+</button>
+
+<popover-content id="clipboard" #popover>
+    <label class="nice-label no-margin-bottom font-size-10 font-weight-500">
+        <i class="fa fa-check-circle-o"></i> {{popover_content}}
+    </label>
+</popover-content>
