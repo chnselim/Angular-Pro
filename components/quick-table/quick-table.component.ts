@@ -1,13 +1,11 @@
-import {
-    AfterContentInit, Component, ContentChildren, EventEmitter, Input, OnChanges, Output, QueryList
-} from '@angular/core';
-import {QuickTableColumnDirective} from './quick-table-column.directive';
-import {ComponentBase} from '../base.component';
-import {isNullOrUndefined} from 'util';
-import {QuickSelectItemDirective} from 'bng-angular-base/components/quick-select/quick-select-item.directive';
-import {el} from '@angular/platform-browser/testing/src/browser_util';
-import {StorageServiceBase} from '../../services/storage.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AfterContentInit, Component, ContentChildren, EventEmitter, Input, OnChanges, Output, QueryList} from '@angular/core';
 import {CheckboxFilterModel} from '../../models/checkbox-filter/checkbox-filter.model';
+import {ComponentBase} from '../base.component';
+import {QuickSelectItemDirective} from 'bng-angular-base/components/quick-select/quick-select-item.directive';
+import {QuickTableColumnDirective} from './quick-table-column.directive';
+import {StorageServiceBase} from '../../services/storage.service';
+import {isNullOrUndefined} from 'util';
 
 @Component({
     selector: 'quick-table',
@@ -20,7 +18,9 @@ import {CheckboxFilterModel} from '../../models/checkbox-filter/checkbox-filter.
 })
 export class QuickTableComponent extends ComponentBase implements OnChanges, AfterContentInit {
 
-    constructor(protected storage_service: StorageServiceBase) {
+    constructor(protected storage_service: StorageServiceBase,
+                protected route: ActivatedRoute,
+                protected router: Router) {
         super();
     }
 
@@ -34,10 +34,10 @@ export class QuickTableComponent extends ComponentBase implements OnChanges, Aft
     public total_count: number;
 
     @Input('per-page')
-    public per_page = 20;
+    public per_page: number = 20;
 
     @Input('current-page')
-    public current_page = 1;
+    public current_page: number = 1;
 
     @Input('show-index-number')
     public show_index_number: boolean = false;
@@ -47,6 +47,9 @@ export class QuickTableComponent extends ComponentBase implements OnChanges, Aft
 
     @Output('onPageChanged')
     public current_page_changed: EventEmitter<number> = new EventEmitter<number>();
+
+    @Input('query-parameters')
+    public query_parameters = new Map<string, string>();
 
     @ContentChildren(QuickTableColumnDirective)
     public columns: QueryList<QuickTableColumnDirective>;
@@ -79,6 +82,7 @@ export class QuickTableComponent extends ComponentBase implements OnChanges, Aft
         this.current_page = page;
         this.current_page_changed.emit(page);
         this.getIndexNumberList(page);
+        this.query_parameters.set('page', page.toString());
     }
 
     public changePerPage(selected_item: QuickSelectItemDirective) {
@@ -87,6 +91,7 @@ export class QuickTableComponent extends ComponentBase implements OnChanges, Aft
         this.per_page = parseInt(query_value);
         this.current_page = 1;
         this.getIndexNumberList(this.current_page);
+        this.query_parameters.set('per_page', this.per_page.toString());
     }
 
     public changeSortType(column: QuickTableColumnDirective) {
