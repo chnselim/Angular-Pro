@@ -1,12 +1,14 @@
-import {
-    Component, DoCheck, Input, IterableDiffer, IterableDiffers, KeyValueDiffers, OnInit, QueryList,
-    SimpleChanges
-} from '@angular/core';
-import {QuickTableComponent} from '../quick-table/quick-table.component';
+import {ActivatedRoute, Params, Router} from '@angular/router';
+import {Component, DoCheck, Input, KeyValueDiffer, KeyValueDiffers, OnInit} from '@angular/core';
 import {GeneralAPIServiceBase} from '../../services/general-api.service';
-import 'nglinq/linq';
+import {QuickTableComponent} from '../quick-table/quick-table.component';
 import {QuickTableColumnDirective} from '../quick-table/quick-table-column.directive';
+import {QuickSelectItemDirective} from 'bng-angular-base/components/quick-select/quick-select-item.directive';
 import {StorageServiceBase} from '../../services/storage.service';
+import {URLSearchParams} from '@angular/http/src/url_search_params';
+import {UrlUtility} from 'bng-angular-base/utilities/url.utility';
+import {isNullOrUndefined} from 'util';
+import 'nglinq/linq';
 
 @Component({
     selector: 'smart-table',
@@ -15,20 +17,19 @@ import {StorageServiceBase} from '../../services/storage.service';
 })
 export class SmartTableComponent extends QuickTableComponent implements OnInit, DoCheck {
 
-    private refresh_on_init: boolean = false;
-    private initialized: boolean = false;
-    public key_value_differ: any;
-
-    public constructor(protected storage_service: StorageServiceBase, private differs: KeyValueDiffers) {
-        super(storage_service);
-        this.key_value_differ = this.differs.find(this.query_parameters).create(null);
+    public constructor(protected storage_service: StorageServiceBase,
+                       protected route: ActivatedRoute,
+                       protected router: Router,
+                       private differs: KeyValueDiffers) {
+        super(storage_service, route, router);
     }
+
+    public initialized: boolean = false;
+
+    public key_value_differ: KeyValueDiffer<any, any> = null;
 
     @Input('api-source')
     public api_source: GeneralAPIServiceBase<any>;
-
-    @Input('query-parameters')
-    public query_parameters = new Map<string, string>();
 
     @Input()
     public tag: string = 'all';
@@ -36,21 +37,39 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
     @Input('source-selector')
     public source_selector = null;
 
-    @Input('auto-refresh')
-    public auto_refresh: boolean = true;
+    @Input('show-url-params')
+    public show_url_params: boolean = true;
 
-    public changePage(page: number) {
-        super.changePage(page);
+    @Input('table-route')
+    public table_route: string;
+
+    public table_share_link: string;
+
+    ngOnInit() {
+        this.is_request_loading = true;
+        this.pushURLToQueryParams();
         this.refresh();
+        setTimeout(() => {
+            this.initialized = true;
+        });
+    }
+
+    ngDoCheck(): void {
+        if (this.isQueryParamsChanged && this.initialized) {
+            this.refresh();
+        }
+    }
+
+    refresh(): void {
+        this.getSourceFromAPI();
+        if (this.key_value_differ === null) {
+            this.key_value_differ = this.differs.find(this.query_parameters).create<any, any>(null);
+        }
+        this.pushQueryParamsToURL();
     }
 
     public changeSortType(column: QuickTableColumnDirective) {
         super.changeSortType(column);
-        this.refresh();
-    }
-
-    public changePerPage(per_page) {
-        super.changePerPage(per_page);
         this.refresh();
     }
 
@@ -74,27 +93,56 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
             });
     }
 
-    refresh(): void {
-        if (this.initialized) {
-            this.getSourceFromAPI();
-        } else {
-            this.refresh_on_init = true;
+    private pushURLToQueryParams() {
+        if (this.show_url_params) {
+            const url_params = this.route.snapshot.queryParams;
+            for (const key in url_params) {
+                this.query_parameters.set(key, url_params[key]);
+                if (key === 'page') {
+                    this.current_page = parseInt(url_params['page']);
+                    this.getIndexNumberList(this.current_page);
+                } else if (key === 'per_page') {
+                    this.per_page = url_params['per_page'];
+                }
+                this.query_parameters.forEach((value, key) => {
+                    if (!Object.keys(url_params).contains(key)) {
+                        this.query_parameters.delete(key);
+                    }
+                });
+            }
         }
     }
 
-    ngOnInit() {
-        this.is_request_loading = true;
-        this.initialized = true;
-        if (this.auto_refresh || this.refresh_on_init) {
-            this.refresh();
+    private pushQueryParamsToURL() {
+        if (this.show_url_params) {
+            const url_params: Params = {};
+            url_params['page'] = this.current_page;
+            url_params['per_page'] = this.per_page;
+            this.query_parameters.forEach((value, key) => {
+                if (key !== 'page' && key !== 'per_page') {
+                    url_params[key] = value;
+                }
+            });
+            this.router.navigate([], {queryParams: url_params});
         }
-        this.key_value_differ.diff(this.query_parameters);
+        this.table_share_link = this.generateResponseURL();
     }
 
-    ngDoCheck(): void {
-        const key_value_changed = this.key_value_differ.diff(this.query_parameters);
-        if (key_value_changed) {
-            this.refresh();
+    private generateResponseURL(): string {
+        let params: URLSearchParams;
+        this.query_parameters.set('page', this.current_page.toString());
+        if (!isNullOrUndefined(this.query_parameters)) {
+            params = UrlUtility.buildURLSearchParams(this.query_parameters);
         }
+        return this.table_route + '?' + params;
+    }
+
+    private get isQueryParamsChanged(): boolean {
+        if (this.key_value_differ !== null) {
+            if (this.key_value_differ.diff(this.query_parameters)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
