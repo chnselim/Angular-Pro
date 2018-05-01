@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {Clipboard} from 'ts-clipboard';
-import {ComponentBase} from 'bng-angular-base/components/base.component';
 
 @Component({
     selector: 'quick-button',
@@ -37,7 +36,6 @@ export class QuickButtonComponent {
 
     @Input('tooltip-placement')
     public tooltip_placement: string = 'top';
-
 
     public copyToClipboard(clipboard_key) {
         Clipboard.copy(clipboard_key);
