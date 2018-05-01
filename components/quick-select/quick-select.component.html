@@ -12,8 +12,8 @@
         *ngIf="source" class="form-control">
     <option [value]="selected_item" *ngIf="default_value">{{default_value}}</option>
     <ng-container *ngFor="let item of source">
-        <option *ngIf="selected_item && (item === selected_item)" [ngValue]="selected_item" selected>{{item[name_selector]}}</option>
-        <option *ngIf="selected_item && (item !== selected_item)" [ngValue]="item">{{item[name_selector]}}</option>
+        <option *ngIf="selected_item && (item[value_selector] === selected_item[value_selector])" [ngValue]="selected_item" selected>{{item[name_selector]}}</option>
+        <option *ngIf="selected_item && (item[value_selector] !== selected_item[value_selector])" [ngValue]="item">{{item[name_selector]}}</option>
         <option *ngIf="!selected_item" [ngValue]="item">{{item[name_selector]}}</option>
     </ng-container>
 </select>
