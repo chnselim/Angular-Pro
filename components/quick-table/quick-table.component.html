@@ -1,21 +1,24 @@
 <section class="tables">
     <div class="row">
         <div class="col-lg-12">
-            <p class="table-title"><b *ngIf="title">{{title}}</b>
-                <multi-select-box *ngIf="table_tag"
-                                  [source]="getFilterableColumns()"
-                                  (selected-listChange)="setCheckboxFilter($event)"
-                                  [selected-list]="checkbox_filter_checked_list"
-                                  value-selector="title"
-                                  fa-icon="fa-filter"
-                                  color-class="text-nice-blue"></multi-select-box>
-                <b [ngClass]="title ? 'table-information': 'table-information margin-bottom-10'"
-                   *ngIf="total_count">
-                    Sayfa: <span>{{current_page}}</span> &nbsp; | &nbsp;
-                    Toplam: <span>{{total_count}}</span>
-                </b>
-            </p>
-            <div *ngIf="title" class="border-bottom"></div>
+            <b class="table-title" *ngIf="title">{{title}}</b>
+            <multi-select-box *ngIf="table_tag"
+                              [source]="getFilterableColumns()"
+                              background-color="#f0fffc"
+                              (selected-listChange)="setCheckboxFilter($event)"
+                              [selected-list]="checkbox_filter_checked_list"
+                              value-selector="title"
+                              fa-icon="fa-filter"></multi-select-box>
+            <quick-button *ngIf="table_share_link" size="xxs-circle" color-class="blue-wb"
+                          [clipboard]="table_share_link" tooltip="URL Paylaş"
+                          popover-content="Kopyalandı" [popover-dismiss-time]="1500"
+                          fa-icon="fa-share-alt"></quick-button>
+            <b class="table-title" [ngClass]="title ? 'table-information': 'table-information margin-bottom-10'"
+               *ngIf="total_count">
+                Sayfa: <span>{{current_page}}</span> &nbsp; | &nbsp;
+                Toplam: <span>{{total_count}}</span>
+            </b>
+            <div *ngIf="title" class="border-bottom margin-top-5"></div>
         </div>
         <div class="col-lg-12">
             <div class="card">
@@ -30,18 +33,15 @@
                                 <th *ngIf="checkColumnVisibilityStatus(column);" class="table-columns"
                                     [ngClass]="(column.table_column_class) ? column.table_column_class: ''">
                                     <b *ngIf="!column.sort_by"
-                                       [textContent]="column.short_title ? column.short_title:column.title"
-                                       [attr.rel]="'tooltip'"
-                                       [attr.data-title]="(column.short_title) ? column.title: ''"></b>
-                                    <a class="underline"
-                                       *ngIf="column.sort_by"
+                                       [textContent]="column.short_title ? column.short_title:column.title"></b>
+                                    <a *ngIf="column.sort_by"
                                        (click)="changeSortType(column);">
-                                        <b [textContent]="column.short_title ? column.short_title:column.title"
-                                           [attr.rel]="'tooltip'"
-                                           [attr.data-title]="(column.short_title) ? column.title: ''"></b>
+                                        <b class="underline"
+                                           [textContent]="column.short_title ? column.short_title:column.title"></b>
                                         <i *ngIf="column.is_column_sort_icon_descending !== undefined && sort_by === column.sort_by"
                                            [ngClass]="(column.is_column_sort_icon_descending) ? 'fa fa-arrow-circle-up margin-left-5 text-success': 'fa fa-arrow-circle-down margin-left-5 text-danger'"></i>
                                     </a>
+                                    <info *ngIf="column.short_title" [value]="column.title"></info>
                                 </th>
                             </ng-container>
                         </tr>
@@ -77,7 +77,8 @@
                     </table>
                     <smart-loader [hidden]="!is_request_loading"></smart-loader>
                     <div *ngIf="source">
-                        <p *ngIf="source.length === 0" class="align-center margin-top-10">Gösterilecek veri bulunamadı.</p>
+                        <p *ngIf="source.length === 0" class="align-center margin-top-10">Gösterilecek veri
+                            bulunamadı.</p>
                     </div>
                 </div>
                 <quick-select (item-selected)="changePerPage($event)" ngDefaultControl *ngIf="total_count > 10"
