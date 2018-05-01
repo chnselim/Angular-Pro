@@ -4,7 +4,9 @@ import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 import {QuickTableColumnDirective} from './components/quick-table/quick-table-column.directive';
+import {QuickButtonComponent} from './components/quick-button/quick-button.component';
 import {BadgeComponent} from './components/badge/badge.component';
+import {InfoTooltipComponent} from './components/info-tooltip/info-tooltip.component';
 import {QuickSelectComponent} from './components/quick-select/quick-select.component';
 import {QuickSelectItemDirective} from './components/quick-select/quick-select-item.directive';
 import {RepeatModule} from 'ngrepeat/repeat.module';
@@ -18,11 +20,13 @@ import {CardFooterComponent} from './components/card/card-footer/card-footer.com
 import {CardContentRowComponent} from './components/card/card-content-row/card-content-row.component';
 import {CardComponent} from './components/card/card.component';
 import {MultiSelectBoxComponent} from './components/multi-select-box/multi-select-box.component';
+import {PopoverModule} from 'ngx-popover';
 
 @NgModule({
     declarations: [
         QuickTableComponent,
         QuickTableColumnDirective,
+        QuickButtonComponent,
         BadgeComponent,
         QuickSelectComponent,
         QuickSelectItemDirective,
@@ -34,6 +38,7 @@ import {MultiSelectBoxComponent} from './components/multi-select-box/multi-selec
         CardContentComponent,
         CardFooterComponent,
         CardContentRowComponent,
+        InfoTooltipComponent,
         CardComponent
     ],
     imports: [
@@ -41,11 +46,13 @@ import {MultiSelectBoxComponent} from './components/multi-select-box/multi-selec
         FormsModule,
         CommonModule,
         RepeatModule,
-        RouterModule
+        RouterModule,
+        PopoverModule
     ],
     exports: [
         QuickTableComponent,
         QuickTableColumnDirective,
+        QuickButtonComponent,
         BadgeComponent,
         QuickSelectComponent,
         QuickSelectItemDirective,
@@ -57,6 +64,7 @@ import {MultiSelectBoxComponent} from './components/multi-select-box/multi-selec
         CardContentComponent,
         CardFooterComponent,
         CardContentRowComponent,
+        InfoTooltipComponent,
         CardComponent
     ]
 })
