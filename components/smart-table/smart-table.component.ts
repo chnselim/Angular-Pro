@@ -1,14 +1,5 @@
 import {ActivatedRoute, NavigationEnd, Params, Router} from '@angular/router';
-import {
-    AfterViewInit,
-    Component,
-    DoCheck,
-    Input,
-    KeyValueDiffer,
-    KeyValueDiffers,
-    OnInit,
-    QueryList
-} from '@angular/core';
+import {AfterViewInit, Component, DoCheck, Input, KeyValueDiffer, KeyValueDiffers, OnInit, QueryList} from '@angular/core';
 import {GeneralAPIServiceBase} from '../../services/general-api.service';
 import {QuickTableComponent} from '../quick-table/quick-table.component';
 import {QuickTableColumnDirective} from '../quick-table/quick-table-column.directive';
