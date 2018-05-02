@@ -48,8 +48,6 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
     @Input('table-route')
     public table_route: string;
 
-    public table_share_link: string;
-
     ngOnInit() {
         this.is_request_loading = true;
         this.pushURLToQueryParams();
