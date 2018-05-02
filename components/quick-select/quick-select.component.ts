@@ -1,4 +1,4 @@
-import {Component, ContentChildren, EventEmitter, Input, Output, QueryList, AfterViewInit} from '@angular/core';
+import {Component, ContentChildren, EventEmitter, Input, Output, QueryList, AfterViewInit, ChangeDetectorRef} from '@angular/core';
 import {ComponentBase} from '../base.component';
 import {QuickSelectItemDirective} from './quick-select-item.directive';
 import {QuickTableComponent} from '../quick-table/quick-table.component';
@@ -17,6 +17,7 @@ export class QuickSelectComponent extends ComponentBase implements AfterViewInit
 
     constructor(private quick_table: QuickTableComponent,
                 private route: ActivatedRoute,
+                private cdr: ChangeDetectorRef,
                 private router: Router) {
         super();
         this.router.events.forEach((event) => {
@@ -68,6 +69,7 @@ export class QuickSelectComponent extends ComponentBase implements AfterViewInit
         setTimeout(() => {
             this.setSelectedSourceFilters();
         }, 1000);
+        this.cdr.detectChanges();
     }
 
     private setSelectedFilters() {
