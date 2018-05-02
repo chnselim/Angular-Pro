@@ -51,6 +51,8 @@ export class QuickTableComponent extends ComponentBase implements OnChanges, Aft
     @Input('query-parameters')
     public query_parameters = new Map<string, string>();
 
+    public table_share_link: string;
+
     @ContentChildren(QuickTableColumnDirective)
     public columns: QueryList<QuickTableColumnDirective>;
 
