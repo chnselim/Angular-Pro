@@ -1,5 +1,14 @@
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {Component, DoCheck, Input, KeyValueDiffer, KeyValueDiffers, OnInit} from '@angular/core';
+import {ActivatedRoute, NavigationEnd, Params, Router} from '@angular/router';
+import {
+    AfterViewInit,
+    Component,
+    DoCheck,
+    Input,
+    KeyValueDiffer,
+    KeyValueDiffers,
+    OnInit,
+    QueryList
+} from '@angular/core';
 import {GeneralAPIServiceBase} from '../../services/general-api.service';
 import {QuickTableComponent} from '../quick-table/quick-table.component';
 import {QuickTableColumnDirective} from '../quick-table/quick-table-column.directive';
@@ -22,6 +31,11 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
                        protected router: Router,
                        private differs: KeyValueDiffers) {
         super(storage_service, route, router);
+        this.router.events.forEach((event) => {
+            if (event instanceof NavigationEnd) {
+                this.pushURLToQueryParams();
+            }
+        });
     }
 
     public initialized: boolean = false;
