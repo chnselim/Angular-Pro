@@ -18,7 +18,7 @@
                 Sayfa: <span>{{current_page}}</span> &nbsp; | &nbsp;
                 Toplam: <span>{{total_count}}</span>
             </b>
-            <div *ngIf="title" class="border-bottom margin-top-5"></div>
+            <div *ngIf="title || table_share_link || table_tag" class="border-bottom margin-top-5"></div>
         </div>
         <div class="col-lg-12">
             <div class="card">
