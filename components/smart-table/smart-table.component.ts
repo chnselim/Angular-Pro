@@ -19,8 +19,7 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
 
     public constructor(protected storage_service: StorageServiceBase,
                        protected route: ActivatedRoute,
-                       protected router: Router,
-                       private differs: KeyValueDiffers) {
+                       protected router: Router) {
         super(storage_service, route, router);
         this.router.events.forEach((event) => {
             if (event instanceof NavigationEnd) {
@@ -65,9 +64,6 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
 
     refresh(): void {
         this.getSourceFromAPI();
-        if (this.key_value_differ === null) {
-            this.key_value_differ = this.differs.find(this.query_parameters).create<any, any>(null);
-        }
         this.pushQueryParamsToURL();
     }
 
@@ -107,11 +103,11 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
                 } else if (key === 'per_page') {
                     this.per_page = url_params['per_page'];
                 }
-                this.query_parameters.forEach((value, key) => {
-                    if (!Object.keys(url_params).contains(key)) {
-                        this.query_parameters.delete(key);
+                for (let param in this.query_parameters) {
+                    if (!Object.keys(url_params).contains(param)) {
+                        this.query_parameters.delete(param);
                     }
-                });
+                }
             }
         }
     }
@@ -121,11 +117,11 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
             const url_params: Params = {};
             url_params['page'] = this.current_page;
             url_params['per_page'] = this.per_page;
-            this.query_parameters.forEach((value, key) => {
-                if (key !== 'page' && key !== 'per_page') {
-                    url_params[key] = value;
+            for (let param in this.query_parameters) {
+                if (param !== 'page' && param !== 'per_page') {
+                    url_params[param] = this.query_parameters[param];
                 }
-            });
+            }
             this.router.navigate([], {queryParams: url_params});
         }
         this.table_share_link = this.generateResponseURL();

@@ -1,45 +1,45 @@
-import {Http, RequestMethod, RequestOptions, Headers} from '@angular/http';
-import 'rxjs/add/operator/toPromise';
+import {HttpClient, HttpHeaders, HttpRequest, HttpParams} from '@angular/common/http';
 import {ResponseModel} from '../models/response.model';
-import {isNullOrUndefined} from 'util';
 import {UrlUtility} from '../utilities/url.utility';
+import {isNullOrUndefined} from 'util';
+import 'rxjs/add/operator/toPromise';
 
 export abstract class APIServiceBase {
 
-    constructor(protected http: Http) {
+    constructor(protected http: HttpClient) {
     }
 
-    public httpHead<T>(uri: string, query_parameters?: Map<string, string>): Promise<ResponseModel<T>> {
-        return this.doApiCall(RequestMethod.Head, uri, query_parameters);
+    public httpHead<T>(uri: string, query_parameters?: HttpParams): Promise<ResponseModel<T>> {
+        return this.doApiCall('HEAD', uri, query_parameters);
     }
 
-    public httpGet<T>(uri: string, query_parameters?: Map<string, string>): Promise<ResponseModel<T>> {
-        return this.doApiCall(RequestMethod.Get, uri, query_parameters);
+    public httpGet<T>(uri: string, query_parameters?: HttpParams): Promise<ResponseModel<T>> {
+        return this.doApiCall('GET', uri, query_parameters);
     }
 
-    public httpPost<T>(uri: string, body: any, query_parameters?: Map<string, string>): Promise<ResponseModel<T>> {
-        return this.doApiCall(RequestMethod.Post, uri, query_parameters, body);
+    public httpPost<T>(uri: string, body: any, query_parameters?: HttpParams): Promise<ResponseModel<T>> {
+        return this.doApiCall('POST', uri, query_parameters, body);
     }
 
-    public httpPatch<T>(uri: string, body: any, query_parameters?: Map<string, string>): Promise<ResponseModel<T>> {
-        return this.doApiCall(RequestMethod.Patch, uri, query_parameters, body);
+    public httpPatch<T>(uri: string, body: any, query_parameters?: HttpParams): Promise<ResponseModel<T>> {
+        return this.doApiCall('PATCH', uri, query_parameters, body);
     }
 
-    public httpPut<T>(uri: string, body: any, query_parameters?: Map<string, string>): Promise<ResponseModel<T>> {
-        return this.doApiCall(RequestMethod.Put, uri, query_parameters, body);
+    public httpPut<T>(uri: string, body: any, query_parameters?: HttpParams): Promise<ResponseModel<T>> {
+        return this.doApiCall('PUT', uri, query_parameters, body);
     }
 
-    public httpDelete<T>(uri: string, query_parameters?: Map<string, string>): Promise<ResponseModel<T>> {
-        return this.doApiCall(RequestMethod.Delete, uri, query_parameters);
+    public httpDelete<T>(uri: string, query_parameters?: HttpParams): Promise<ResponseModel<T>> {
+        return this.doApiCall('DELETE', uri, query_parameters);
     }
 
-    protected doApiCall<T>(method: RequestMethod,
+    protected doApiCall<T>(method: string,
                            uri: string,
-                           query_parameters?: Map<string, string>,
+                           query_parameters?: HttpParams,
                            body?: any): Promise<ResponseModel<T>> {
         const request_options = this.generateRequestOptions(method, uri, query_parameters, body);
         return this.http
-            .request(request_options.url, request_options)
+            .request(request_options.method, request_options.url, request_options)
             .toPromise()
             .then(response => {
 
@@ -56,29 +56,22 @@ export abstract class APIServiceBase {
             });
     }
 
-    protected getHeaders(): Headers {
-        const headers = new Headers();
+    protected getHeaders(): HttpHeaders {
+        const headers = new HttpHeaders();
         headers.append('Content-Type', 'application/json');
         return headers;
     }
 
     protected abstract getBaseUri(): string;
 
-    private generateRequestOptions(method: RequestMethod,
+    private generateRequestOptions(method: string,
                                    uri: string,
-                                   query_parameters?: Map<string, string>,
-                                   body?: any/*todo*/): RequestOptions {
-        const request_options = new RequestOptions();
-        request_options.method = method;
-        request_options.url = this.getBaseUri() + uri;
-        request_options.headers = this.getHeaders();
+                                   query_parameters?: HttpParams,
+                                   body?: any): HttpRequest<object> {
+        const request_options = new HttpRequest<object>(method, this.getBaseUri() + uri, body || null,
+            {params: query_parameters, headers: this.getHeaders()});
 
-        if (!isNullOrUndefined(body)) {
-            request_options.body = JSON.stringify(body);
-        }
-        if (!isNullOrUndefined(query_parameters)) {
-            request_options.params = UrlUtility.buildURLSearchParams(query_parameters);
-        }
+        // {params: UrlUtility.buildURLSearchParams(query_parameters), headers: this.getHeaders()}
 
         return request_options;
     }
