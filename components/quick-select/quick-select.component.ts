@@ -73,36 +73,36 @@ export class QuickSelectComponent extends ComponentBase implements AfterViewInit
     }
 
     private setSelectedFilters() {
-        for (let param in this.quick_table.query_parameters) {
+        this.quick_table.query_parameters.forEach((value, key) => {
             this.item_list.forEach(item => {
                 if (this.key) {
-                    if (this.quick_table.query_parameters[param] === item.value && param === this.key) {
+                    if (value === item.value && key === this.key) {
                         this.selected_item = item;
                     }
                 } else if (!this.key) {
-                    if (this.quick_table.query_parameters[param] === item.value) {
+                    if (value === item.value) {
                         this.selected_item = item;
                     }
                 }
             });
-        }
+        });
     }
 
     private setSelectedSourceFilters() {
-        for (let param in this.quick_table.query_parameters) {
+        this.quick_table.query_parameters.forEach((value, key) => {
             if (this.source) {
                 this.source.forEach(source_item => {
                     if (this.key) {
-                        if (this.quick_table.query_parameters[param] === source_item[this.value_selector] && param === this.key) {
+                        if (value === source_item[this.value_selector] && key === this.key) {
                             this.selected_item = source_item;
                         }
                     } else if (!this.key) {
-                        if (this.quick_table.query_parameters[param] === source_item[this.value_selector]) {
+                        if (value === source_item[this.value_selector]) {
                             this.selected_item = source_item;
                         }
                     }
                 });
             }
-        }
+        });
     }
 }

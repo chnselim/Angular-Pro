@@ -6,7 +6,6 @@ import {QuickSelectItemDirective} from 'bng-angular-base/components/quick-select
 import {QuickTableColumnDirective} from './quick-table-column.directive';
 import {StorageServiceBase} from '../../services/storage.service';
 import {isNullOrUndefined} from 'util';
-import {HttpParams} from '@angular/common/http';
 
 @Component({
     selector: 'quick-table',
@@ -50,7 +49,7 @@ export class QuickTableComponent extends ComponentBase implements OnChanges, Aft
     public current_page_changed: EventEmitter<number> = new EventEmitter<number>();
 
     @Input('query-parameters')
-    public query_parameters: HttpParams;
+    public query_parameters = new Map<string, string>();
 
     public table_share_link: string;
 

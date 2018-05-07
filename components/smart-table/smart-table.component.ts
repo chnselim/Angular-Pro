@@ -9,6 +9,7 @@ import {URLSearchParams} from '@angular/http/src/url_search_params';
 import {UrlUtility} from 'bng-angular-base/utilities/url.utility';
 import {isNullOrUndefined} from 'util';
 import 'nglinq/linq';
+import {HttpParams} from '@angular/common/http';
 
 @Component({
     selector: 'smart-table',
@@ -19,7 +20,8 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
 
     public constructor(protected storage_service: StorageServiceBase,
                        protected route: ActivatedRoute,
-                       protected router: Router) {
+                       protected router: Router,
+                       private differs: KeyValueDiffers) {
         super(storage_service, route, router);
         this.router.events.forEach((event) => {
             if (event instanceof NavigationEnd) {
@@ -64,6 +66,9 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
 
     refresh(): void {
         this.getSourceFromAPI();
+        if (this.key_value_differ === null) {
+            this.key_value_differ = this.differs.find(this.query_parameters).create<any, any>(null);
+        }
         this.pushQueryParamsToURL();
     }
 
@@ -103,11 +108,11 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
                 } else if (key === 'per_page') {
                     this.per_page = url_params['per_page'];
                 }
-                for (let param in this.query_parameters) {
-                    if (!Object.keys(url_params).contains(param)) {
-                        this.query_parameters.delete(param);
+                this.query_parameters.forEach((value, key) => {
+                    if (!Object.keys(url_params).contains(key)) {
+                        this.query_parameters.delete(key);
                     }
-                }
+                });
             }
         }
     }
@@ -117,18 +122,18 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
             const url_params: Params = {};
             url_params['page'] = this.current_page;
             url_params['per_page'] = this.per_page;
-            for (let param in this.query_parameters) {
-                if (param !== 'page' && param !== 'per_page') {
-                    url_params[param] = this.query_parameters[param];
+            this.query_parameters.forEach((value, key) => {
+                if (key !== 'page' && key !== 'per_page') {
+                    url_params[key] = value;
                 }
-            }
+            });
             this.router.navigate([], {queryParams: url_params});
         }
         this.table_share_link = this.generateResponseURL();
     }
 
     private generateResponseURL(): string {
-        let params: URLSearchParams;
+        let params: HttpParams;
         this.query_parameters.set('page', this.current_page.toString());
         if (!isNullOrUndefined(this.query_parameters)) {
             params = UrlUtility.buildURLSearchParams(this.query_parameters);
