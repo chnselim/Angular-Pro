@@ -1,4 +1,3 @@
-import {isNullOrUndefined} from 'util';
 import {CheckboxFilterModel} from '../models/checkbox-filter/checkbox-filter.model';
 
 export abstract class StorageServiceBase {
@@ -12,7 +11,7 @@ export abstract class StorageServiceBase {
         if (is_persistent) {
             const item = localStorage.getItem(this.getLocalStoragePrefix() + key);
             let response: T;
-            if (!isNullOrUndefined(item)) {
+            if (item !== null && item !== undefined) {
                 response = JSON.parse(item) as T;
             } else {
                 response = null;

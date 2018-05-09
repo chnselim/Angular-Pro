@@ -1,4 +1,4 @@
-import {ContentChild, Directive, Input, OnInit} from '@angular/core';
+import {Directive, Input} from '@angular/core';
 
 @Directive({
     selector: 'quick-select-item',

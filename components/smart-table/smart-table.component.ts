@@ -1,13 +1,11 @@
 import {ActivatedRoute, NavigationEnd, Params, Router} from '@angular/router';
-import {AfterViewInit, Component, DoCheck, Input, KeyValueDiffer, KeyValueDiffers, OnInit, QueryList} from '@angular/core';
+import {Component, DoCheck, Input, KeyValueDiffer, KeyValueDiffers, OnInit} from '@angular/core';
 import {GeneralAPIServiceBase} from '../../services/general-api.service';
+import {HttpParams} from '@angular/common/http';
 import {QuickTableComponent} from '../quick-table/quick-table.component';
 import {QuickTableColumnDirective} from '../quick-table/quick-table-column.directive';
-import {QuickSelectItemDirective} from 'bng-angular-base/components/quick-select/quick-select-item.directive';
 import {StorageServiceBase} from '../../services/storage.service';
-import {URLSearchParams} from '@angular/http/src/url_search_params';
-import {UrlUtility} from 'bng-angular-base/utilities/url.utility';
-import {isNullOrUndefined} from 'util';
+import {UrlUtility} from '../../utilities/url.utility';
 import 'nglinq/linq';
 
 @Component({
@@ -66,7 +64,7 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
     refresh(): void {
         this.getSourceFromAPI();
         if (this.key_value_differ === null) {
-            this.key_value_differ = this.differs.find(this.query_parameters).create<any, any>(null);
+            this.key_value_differ = this.differs.find(this.query_parameters).create<any, any>();
         }
         this.pushQueryParamsToURL();
     }
@@ -132,9 +130,9 @@ export class SmartTableComponent extends QuickTableComponent implements OnInit, 
     }
 
     private generateResponseURL(): string {
-        let params: URLSearchParams;
+        let params: HttpParams;
         this.query_parameters.set('page', this.current_page.toString());
-        if (!isNullOrUndefined(this.query_parameters)) {
+        if (this.query_parameters !== null && this.query_parameters !== undefined) {
             params = UrlUtility.buildURLSearchParams(this.query_parameters);
         }
         return this.table_route + '?' + params;
