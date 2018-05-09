@@ -9,7 +9,7 @@
                               [selected-list]="checkbox_filter_checked_list"
                               value-selector="title"
                               fa-icon="fa-filter"></multi-select-box>
-            <quick-button *ngIf="table_share_link" size="xxs-circle" color-class="blue-wb"
+            <quick-button *ngIf="table_share_link" size="xxs-circle margin-left-2" color-class="blue-wb"
                           [clipboard]="table_share_link" tooltip="URL Paylaş"
                           popover-content="Kopyalandı" [popover-dismiss-time]="1500"
                           fa-icon="fa-share-alt"></quick-button>
@@ -51,7 +51,7 @@
                                 <th *ngIf="checkColumnVisibilityStatus(column);">
                                     <ng-template *ngIf="column.filter_template"
                                                  [ngTemplateOutlet]="column.filter_template"
-                                                 [ngOutletContext]="{title:column.title}"></ng-template>
+                                                 [ngTemplateOutletContext]="{title:column.title}"></ng-template>
                                 </th>
                             </ng-container>
                         </tr>
@@ -69,7 +69,7 @@
                                           [textContent]="content[column.property]"></span>
                                     <ng-template *ngIf="column.cell_template"
                                                  [ngTemplateOutlet]="column.cell_template"
-                                                 [ngOutletContext]="{item:content, column:column, value:content[column.property], index:index_list[index]}"></ng-template>
+                                                 [ngTemplateOutletContext]="{item:content, column:column, value:content[column.property], index:index_list[index]}"></ng-template>
                                 </td>
                             </ng-container>
                         </tr>
