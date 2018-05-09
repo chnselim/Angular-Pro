@@ -2,10 +2,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AfterContentInit, Component, ContentChildren, EventEmitter, Input, OnChanges, Output, QueryList} from '@angular/core';
 import {CheckboxFilterModel} from '../../models/checkbox-filter/checkbox-filter.model';
 import {ComponentBase} from '../base.component';
-import {QuickSelectItemDirective} from 'bng-angular-base/components/quick-select/quick-select-item.directive';
+import {QuickSelectItemDirective} from '../quick-select/quick-select-item.directive';
 import {QuickTableColumnDirective} from './quick-table-column.directive';
 import {StorageServiceBase} from '../../services/storage.service';
-import {isNullOrUndefined} from 'util';
 
 @Component({
     selector: 'quick-table',

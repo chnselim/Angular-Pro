@@ -1,14 +1,14 @@
-import {Headers} from '@angular/http';
+import {HttpHeaders} from '@angular/common/http';
 
 export class ResponseModel<T> {
-    constructor(private body: T, private headers: Headers, private status_code: number) {
+    constructor(private body: T, private headers: HttpHeaders, private status_code: number) {
     }
 
     getBody(): T {
         return this.body;
     }
 
-    getHeaders(): Headers {
+    getHeaders(): HttpHeaders {
         return this.headers;
     }
 
