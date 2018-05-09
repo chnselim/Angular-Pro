@@ -1,4 +1,4 @@
-import {HttpClient, HttpHeaders, HttpRequest, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpRequest} from '@angular/common/http';
 import {ResponseModel} from '../models/response.model';
 import {UrlUtility} from '../utilities/url.utility';
 import 'rxjs/add/operator/toPromise';
@@ -40,15 +40,12 @@ export abstract class APIServiceBase {
         return this.http
             .request(method, request_options.url, {
                 observe: 'response',
-                body: request_options.body,
                 headers: request_options.headers,
+                body: request_options.body,
                 params: request_options.params
             })
             .toPromise()
             .then(response => {
-                if (response === null || response === undefined) {
-                    return new ResponseModel(null, response.headers, response.status);
-                }
                 const response_data = response.body['data'];
                 return new ResponseModel(response_data as T, response.headers, response.status);
             })
@@ -69,12 +66,10 @@ export abstract class APIServiceBase {
                                    uri: string,
                                    query_parameters?: Map<string, string>,
                                    body?: any): HttpRequest<any> {
-        const request_url: string = this.getBaseUri() + uri;
-        const request_options = new HttpRequest(method, request_url, body, {
+        const url: string = this.getBaseUri() + uri;
+        return new HttpRequest(method, url, body, {
             headers: this.getHeaders(),
             params: UrlUtility.buildURLSearchParams(query_parameters)
         });
-
-        return request_options;
     }
 }
