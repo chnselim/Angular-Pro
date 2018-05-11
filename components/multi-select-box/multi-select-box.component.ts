@@ -4,7 +4,8 @@ declare const $: any;
 
 @Component({
     selector: 'multi-select-box',
-    templateUrl: './multi-select-box.component.html'
+    templateUrl: './multi-select-box.component.html',
+    styleUrls: ['./multi-select-box.component.scss']
 })
 export class MultiSelectBoxComponent implements AfterViewInit {
 

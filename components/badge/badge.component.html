@@ -1,9 +1,11 @@
-<label [ngStyle]="{'color': color,'background': background_color}" *ngIf="href === undefined" class="badge-label">
+<label [ngStyle]="{'color': color,'background': background_color}" *ngIf="href === undefined" class="badge-label"
+       [ngClass]="background_color ? 'background': ''">
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </label>
 
 <a *ngIf="href !== undefined && href !== ''" [routerLink]="href">
-    <a [ngStyle]="{'color': color,'background-color': background_color}">
+    <a [ngStyle]="{'color': color,'background-color': background_color}"
+       [ngClass]="background_color ? 'background': ''">
         <ng-container *ngTemplateOutlet="content"></ng-container>
     </a>
 </a>

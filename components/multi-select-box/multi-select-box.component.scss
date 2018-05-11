@@ -1,0 +1,21 @@
+.dropdown-menu-form:before {
+  position: absolute;
+  top: -6px;
+  left: 8px;
+  display: inline-block;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid rgba(0, 40, 100, 0.12);
+  border-left: 5px solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+  content: '';
+}
+.dropdown-menu-form:after {
+  position: absolute;
+  top: -5px;
+  left: 8px;
+  display: inline-block;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid #f0fffc;
+  border-left: 5px solid transparent;
+  content: '';
+}
