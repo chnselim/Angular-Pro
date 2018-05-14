@@ -1,7 +1,8 @@
 <section class="tables">
     <div class="row">
         <div class="col-lg-12">
-            <b class="table-title" *ngIf="title">{{title}}</b>
+            <label class="table-title float-left bg-white border-left-5 background"
+                   *ngIf="title"><b>{{title}}</b></label>
             <multi-select-box *ngIf="table_tag"
                               [source]="getFilterableColumns()"
                               background-color="#f0fffc"
@@ -9,16 +10,17 @@
                               [selected-list]="checkbox_filter_checked_list"
                               value-selector="title"
                               fa-icon="fa-filter"></multi-select-box>
-            <quick-button *ngIf="table_share_link" size="xxs-circle margin-left-2" color-class="blue-wb"
+            <quick-button *ngIf="table_share_link" size="small-box margin-left-2" color-class="primary"
                           [clipboard]="table_share_link" tooltip="URL Paylaş"
                           popover-content="Kopyalandı" [popover-dismiss-time]="1500"
                           fa-icon="fa-share-alt"></quick-button>
-            <b class="table-title" [ngClass]="title ? 'table-information': 'table-information margin-bottom-10'"
-               *ngIf="total_count">
-                Sayfa: <span>{{current_page}}</span> &nbsp; | &nbsp;
-                Toplam: <span>{{total_count}}</span>
-            </b>
-            <div *ngIf="title || table_share_link || table_tag" class="border-bottom margin-top-5"></div>
+            <label class="badge-label table-title float-right bg-white border-right-5 background" *ngIf="total_count"
+                   [ngClass]="title ? 'table-information': 'table-information margin-bottom-10'">
+                <b>Sayfa: <span>{{current_page}}</span> &nbsp; | &nbsp;Toplam: <span>{{total_count}}</span></b>
+            </label>
+        </div>
+        <div class="col-lg-12">
+            <div *ngIf="title || table_share_link || table_tag" class="border-bottom"></div>
         </div>
         <div class="col-lg-12">
             <div class="card">
