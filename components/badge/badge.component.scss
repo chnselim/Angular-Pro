@@ -1,0 +1,30 @@
+.api-value {
+  color: #3d3d3d;
+  font-size: 12px;
+  font-weight: 300;
+}
+
+.background {
+  padding: 2px 18px 1px 18px;
+  -webkit-border-radius: 3px;
+  position: relative;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  font-size: 11.5px;
+  font-weight: 500 !important;
+  box-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.2);
+  &:after {
+    left: 8px;
+  }
+  &:before {
+    right: 8px;
+  }
+  &:after, &:before {
+    font-family: 'FontAwesome';
+    content: '\F111';
+    color: white;
+    position: absolute;
+    font-size: 4px;
+    top: 8px;
+  }
+}

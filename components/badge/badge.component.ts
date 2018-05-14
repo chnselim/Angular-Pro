@@ -4,7 +4,7 @@ import {ComponentBase} from '../base.component';
 @Component({
     selector: 'badge',
     templateUrl: 'badge.component.html',
-    styleUrls: ['badge.component.css'],
+    styleUrls: ['badge.component.scss'],
     providers: [{provide: ComponentBase, useExisting: BadgeComponent}]
 })
 export class BadgeComponent extends ComponentBase {
@@ -19,4 +19,10 @@ export class BadgeComponent extends ComponentBase {
 
     @Input('sub-content')
     public sub_content: string;
+
+    @Input('border-radius')
+    public border_radius: string = 'all';
+
+    @Input('border-size')
+    public border_size: string = '3px';
 }
