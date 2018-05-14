@@ -12,7 +12,7 @@
     "@angular/router": "^6.0.0",
     "core-js": "^2.5.5",
     "nglinq": "^1.0.0",
-    "ngrepeat": "^1.0.0",
+    "ngrepeat": "^2.0.0",
     "ngx-popover": "0.0.16",
     "rxjs": "^6.1.0",
     "rxjs-compat": "^6.1.0",
