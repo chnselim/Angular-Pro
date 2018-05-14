@@ -1,7 +1,7 @@
 <section class="tables">
     <div class="row">
         <div class="col-lg-12">
-            <label class="table-title float-left bg-white border-left-5 background" *ngIf="title">{{title}}</label>
+            <label class="table-title float-left bg-white border-left-5 background" *ngIf="title"><b>{{title}}</b></label>
             <multi-select-box *ngIf="table_tag"
                               [source]="getFilterableColumns()"
                               background-color="#f0fffc"
@@ -15,7 +15,7 @@
                           fa-icon="fa-share-alt"></quick-button>
             <label class="badge-label table-title float-right bg-white border-right-5 background" *ngIf="total_count"
                    [ngClass]="title ? 'table-information': 'table-information margin-bottom-10'">
-                Sayfa: <span>{{current_page}}</span> &nbsp; | &nbsp;Toplam: <span>{{total_count}}</span>
+                <b>Sayfa: <span>{{current_page}}</span> &nbsp; | &nbsp;Toplam: <span>{{total_count}}</span></b>
             </label>
             <div *ngIf="title || table_share_link || table_tag" class="border-bottom margin-top-5"></div>
         </div>
