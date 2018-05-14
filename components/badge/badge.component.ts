@@ -20,9 +20,6 @@ export class BadgeComponent extends ComponentBase {
     @Input('sub-content')
     public sub_content: string;
 
-    @Input('border-radius')
-    public border_radius: string = 'all';
-
     @Input('border-size')
     public border_size: string = '3px';
 }
