@@ -1,7 +1,7 @@
 import {HttpHeaders} from '@angular/common/http';
 
 export class ResponseModel<T> {
-    constructor(private body: T, private headers: HttpHeaders, private status_code: number, private relationships: object) {
+    constructor(private body: T, private headers: HttpHeaders, private status_code: number, private relationships: Map<string,object>) {
     }
 
     getBody(): T {
@@ -16,7 +16,7 @@ export class ResponseModel<T> {
         return this.status_code;
     }
 
-    getRelationships(): object {
+    getRelationships(): Map<string,object> {
         return this.relationships;
     }
 }
