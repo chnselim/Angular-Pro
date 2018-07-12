@@ -47,7 +47,7 @@ export abstract class APIServiceBase {
             .toPromise()
             .then(response => {
                 const response_data = response.body['data'];
-                return new ResponseModel(response_data as T, response.headers, response.status);
+                return new ResponseModel(response_data as T, response.headers, response.status, response.body['relationships']);
             })
             .catch(error => {
                 return Promise.reject(error);
